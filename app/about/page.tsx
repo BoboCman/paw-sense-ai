@@ -11,8 +11,8 @@ export default function AboutPage() {
       <section className="text-center mb-16">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">About PawSense AI</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Combining advanced AI technology with canine behavior science to help you better understand and train your
-          dog.
+          Combining advanced AI technology with professional canine behavior science to decode your dog's natural
+          communication, helping you become the confident pack leader your dog needs.
         </p>
       </section>
 
@@ -22,16 +22,19 @@ export default function AboutPage() {
           <div>
             <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
             <p className="text-gray-700 mb-4">
-              At PawSense AI, we believe that understanding is the foundation of a strong human-canine bond. Our mission
-              is to make professional-level dog behavior analysis accessible to all dog owners.
+              At PawSense AI, we believe that understanding your dog's energy and natural instincts is the foundation of
+              a strong human-canine bond. Our mission is to make professional-level dog behavior analysis accessible to
+              all dog owners, helping you establish calm leadership and clear boundaries.
             </p>
             <p className="text-gray-700 mb-4">
-              By leveraging artificial intelligence, we provide insights that help owners understand their dogs' needs,
-              emotions, and behaviors - leading to more effective training and a happier relationship.
+              By leveraging artificial intelligence, we provide insights that help you read your dog's energy state,
+              body language, and pack instincts - leading to more balanced training and a harmonious relationship based
+              on mutual respect and clear communication.
             </p>
             <p className="text-gray-700">
-              We're committed to promoting positive, force-free training methods that respect your dog's unique
-              personality and needs.
+              We're committed to promoting balanced training methods that address your dog's primal needs for exercise,
+              discipline, and affection—in that exact order—while respecting their unique personality and natural
+              instincts.
             </p>
           </div>
           <div className="relative h-64 md:h-auto rounded-xl overflow-hidden">
@@ -58,8 +61,9 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Video Capture</h3>
                 <p className="text-gray-700">
-                  You record and upload a video of your dog displaying the behavior you want analyzed. Our system
-                  accepts videos up to 100MB in common formats.
+                  You record and upload a video showing your dog's energy state and behavior patterns. Our system
+                  analyzes everything from ear position to tail carriage, accepting videos up to 100MB in common
+                  formats.
                 </p>
               </div>
             </div>
@@ -71,8 +75,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">AI Processing</h3>
                 <p className="text-gray-700">
-                  Our advanced neural networks analyze your dog's body language, movements, vocalizations, and
-                  contextual cues frame by frame.
+                  Our specialized AI analyzes your dog's energy states, body language, posture changes, and subtle
+                  communication signals frame by frame, identifying patterns that reveal their mental state.
                 </p>
               </div>
             </div>
@@ -84,8 +88,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Report Generation</h3>
                 <p className="text-gray-700">
-                  The AI compiles its findings into a comprehensive report with observations, behavioral insights, and
-                  tailored recommendations.
+                  The AI generates a comprehensive analysis with energy state assessment, relationship dynamics, key
+                  behavioral indicators, and structured training exercises you can implement immediately.
                 </p>
               </div>
             </div>
@@ -97,8 +101,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Implementation</h3>
                 <p className="text-gray-700">
-                  You receive practical, actionable advice that you can immediately incorporate into your training and
-                  interaction with your dog.
+                  You receive authoritative, practical exercises that address your dog's specific needs, helping you
+                  establish clear boundaries and project the calm-assertive energy your dog responds to.
                 </p>
               </div>
             </div>
@@ -111,8 +115,8 @@ export default function AboutPage() {
               canine behavior patterns.
             </p>
             <p className="text-gray-700 mb-4">
-              Our system can identify over 50 distinct dog behaviors and body language signals, from subtle ear
-              positions to complex play sequences.
+              Our system can identify over 50 distinct canine behaviors and communication signals, from subtle calming
+              signals to pack hierarchy indicators, ears positions to tail carriage patterns.
             </p>
             <p className="text-gray-700 mb-4">
               The AI has been trained on thousands of hours of dog video footage, reviewed and annotated by professional
@@ -134,8 +138,8 @@ export default function AboutPage() {
             <CardContent className="pt-6">
               <h3 className="text-xl font-semibold mb-3">Deeper Understanding</h3>
               <p className="text-gray-700">
-                Gain insights into your dog's communication style, emotional state, and behavioral patterns that might
-                not be obvious to the untrained eye.
+                Decode your dog's natural communication style, energy states, and instinctual behaviors that reveal
+                exactly what they need from you as their pack leader.
               </p>
             </CardContent>
           </Card>
