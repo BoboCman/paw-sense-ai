@@ -64,19 +64,20 @@ export default function UploadPage() {
     // Start upload process
     setIsUploading(true)
     setError(null)
+    setApiError(null)
+
+    // Create a progress simulation
+    const uploadInterval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 90) {
+          clearInterval(uploadInterval)
+          return 90
+        }
+        return prev + 10
+      })
+    }, 300)
 
     try {
-      // Simulate upload progress
-      const uploadInterval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 90) {
-            clearInterval(uploadInterval)
-            return 90
-          }
-          return prev + 10
-        })
-      }, 300)
-
       // Create form data to send to n8n
       const formData = new FormData()
       formData.append("email", email)
@@ -86,21 +87,24 @@ export default function UploadPage() {
         formData.append("video", videoFile)
       }
 
-      // Get the webhook URL from environment variable
-      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
+      // Use the specific n8n webhook URL
+      const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
 
-      if (!webhookUrl) {
-        throw new Error("Webhook URL not configured")
-      }
+      console.log("Submitting to webhook:", webhookUrl)
 
       // Send data to n8n webhook
       const response = await fetch(webhookUrl, {
         method: "POST",
         body: formData,
+        // Don't set Content-Type header - it will be automatically set with the boundary for FormData
       })
 
+      console.log("Response status:", response.status)
+
       if (!response.ok) {
-        throw new Error("Failed to submit form")
+        const errorText = await response.text()
+        console.error("Error response:", errorText)
+        throw new Error(`Failed to submit form: ${response.status} ${errorText}`)
       }
 
       // Complete the progress bar
@@ -114,9 +118,10 @@ export default function UploadPage() {
       }, 500)
     } catch (err) {
       console.error("Error submitting form:", err)
-      setError(err instanceof Error ? err.message : "An unexpected error occurred")
+      setApiError(err instanceof Error ? err.message : "An unexpected error occurred during upload")
       setIsUploading(false)
       setUploadProgress(0)
+      clearInterval(uploadInterval)
     }
   }
 
@@ -137,7 +142,18 @@ export default function UploadPage() {
             {(error || apiError) && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error || apiError}</AlertDescription>
+                <AlertDescription>
+                  {error || apiError}
+                  {apiError && (
+                    <Button
+                      variant="link"
+                      className="p-0 h-auto text-xs text-white underline ml-2"
+                      onClick={() => console.log("Check console for detailed error information")}
+                    >
+                      See console for details
+                    </Button>
+                  )}
+                </AlertDescription>
               </Alert>
             )}
 
