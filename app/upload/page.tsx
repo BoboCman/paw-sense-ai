@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -50,13 +52,16 @@ export default function UploadPage() {
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <h1 className="text-3xl font-bold text-center mb-2">Upload Your Dog's Video</h1>
       <p className="text-center text-gray-600 mb-8">
-        Our AI will analyze your dog's behavior and provide personalized insights
+        Our AI will analyze your dog's energy state, body language, and natural instincts to provide authoritative
+        training guidance
       </p>
 
       <Card>
         <CardHeader>
           <CardTitle>Video Upload Form</CardTitle>
-          <CardDescription>Please fill out the form below to submit your dog's video for analysis</CardDescription>
+          <CardDescription>
+            Take the first step toward becoming your dog's confident pack leader by submitting your video below
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
@@ -84,15 +89,15 @@ export default function UploadPage() {
               <RadioGroup value={category} onValueChange={setCategory}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="play" id="play" />
-                  <Label htmlFor="play">Play behavior</Label>
+                  <Label htmlFor="play">Play behavior & energy states</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="dog-interaction" id="dog-interaction" />
-                  <Label htmlFor="dog-interaction">Dog-to-dog interaction</Label>
+                  <Label htmlFor="dog-interaction">Dog-to-dog pack dynamics</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="commands" id="commands" />
-                  <Label htmlFor="commands">Response to commands</Label>
+                  <Label htmlFor="commands">Response to leadership & boundaries</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="home" id="home" />
@@ -121,27 +126,19 @@ export default function UploadPage() {
 
             {!showUploader ? (
               <div className="pt-2">
-                <Button
-                  type="button"
-                  onClick={handleContinue}
-                  className="w-full bg-[#27ae60] hover:bg-[#219955]"
-                >
+                <Button type="button" onClick={handleContinue} className="w-full bg-[#27ae60] hover:bg-[#219955]">
                   Continue to Upload
                 </Button>
               </div>
             ) : (
               <div className="space-y-2">
                 <Label>Upload Video</Label>
-                <DirectVideoUploader
-                  email={email}
-                  category={category}
-                  subscribeToTips={subscribeToTips}
-                />
+                <DirectVideoUploader email={email} category={category} subscribeToTips={subscribeToTips} />
                 <div className="flex items-start gap-2 mt-2 text-sm text-gray-600">
                   <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <p>
-                    For best results, ensure good lighting and that your dog is clearly visible in the frame. Maximum file
-                    size: 100MB.
+                    For best results, ensure good lighting and capture your dog's full body language including ear
+                    position, tail carriage, and posture changes. Maximum file size: 100MB.
                   </p>
                 </div>
               </div>
@@ -154,12 +151,12 @@ export default function UploadPage() {
         <div className="flex gap-3">
           <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
           <div>
-            <h3 className="font-medium text-blue-800">Recording Tips</h3>
+            <h3 className="font-medium text-blue-800">Energy & Behavior Recording Tips</h3>
             <ul className="mt-2 space-y-1 text-sm text-blue-700">
-              <li>• Record in a well-lit area with minimal background noise</li>
-              <li>• Capture 1-3 minutes of the specific behavior you want analyzed</li>
+              <li>• Record in a well-lit area where your dog's natural energy state is visible</li>
+              <li>• Capture 1-3 minutes showing transitions between energy states and behaviors</li>
               <li>• Try to record at dog-level height when possible</li>
-              <li>• Include context (toys, other dogs, environment) in the frame</li>
+              <li>• Include environmental context that might influence your dog's energy and response</li>
             </ul>
           </div>
         </div>
@@ -167,3 +164,4 @@ export default function UploadPage() {
     </div>
   )
 }
+
