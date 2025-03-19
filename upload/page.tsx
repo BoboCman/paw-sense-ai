@@ -24,6 +24,7 @@ export default function UploadPage() {
   const [uploadProgress, setUploadProgress] = useState(0)
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [apiError, setApiError] = useState<string | null>(null)
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -55,26 +56,68 @@ export default function UploadPage() {
     return true
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!validateForm()) return
 
-    // Simulate upload process
+    // Start upload process
     setIsUploading(true)
     setError(null)
 
-    const uploadInterval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(uploadInterval)
-          setIsUploading(false)
-          router.push("/confirmation")
-          return 100
-        }
-        return prev + 10
+    try {
+      // Simulate upload progress
+      const uploadInterval = setInterval(() => {
+        setUploadProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(uploadInterval)
+            return 90
+          }
+          return prev + 10
+        })
+      }, 300)
+
+      // Create form data to send to n8n
+      const formData = new FormData()
+      formData.append("email", email)
+      formData.append("category", category)
+      formData.append("subscribeToTips", subscribeToTips.toString())
+      if (videoFile) {
+        formData.append("video", videoFile)
+      }
+
+      // Get the webhook URL from environment variable
+      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL
+
+      if (!webhookUrl) {
+        throw new Error("Webhook URL not configured")
+      }
+
+      // Send data to n8n webhook
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        body: formData,
       })
-    }, 300)
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form")
+      }
+
+      // Complete the progress bar
+      setUploadProgress(100)
+
+      // Clear the interval and redirect to confirmation page
+      clearInterval(uploadInterval)
+      setTimeout(() => {
+        setIsUploading(false)
+        router.push("/confirmation")
+      }, 500)
+    } catch (err) {
+      console.error("Error submitting form:", err)
+      setError(err instanceof Error ? err.message : "An unexpected error occurred")
+      setIsUploading(false)
+      setUploadProgress(0)
+    }
   }
 
   return (
@@ -91,10 +134,10 @@ export default function UploadPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
+            {(error || apiError) && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription>{error || apiError}</AlertDescription>
               </Alert>
             )}
 
