@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     const email = formData.get("email") as string
     const category = formData.get("category") as string
     const subscribeToTips = formData.get("subscribeToTips") as string
-    const videoFile = formData.get("data") as File // Changed to 'data' to match n8n expectations
+    const videoFile = formData.get("video") as File
 
     if (!email || !videoFile) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
@@ -22,25 +22,27 @@ export async function POST(request: NextRequest) {
     console.log("- Video file type:", videoFile.type)
     console.log("- Video file size:", videoFile.size, "bytes")
 
-    // Get the webhook URL
-    const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
+    // Get the webhook URL and add query parameters
+    const webhookUrl = new URL("https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp")
+    webhookUrl.searchParams.append("email", email)
+    webhookUrl.searchParams.append("category", category)
+    webhookUrl.searchParams.append("subscribeToTips", subscribeToTips)
 
-    // Create a new FormData to send to n8n
-    const n8nFormData = new FormData()
-    n8nFormData.append("email", email)
-    n8nFormData.append("category", category)
-    n8nFormData.append("subscribeToTips", subscribeToTips)
-    n8nFormData.append("data", videoFile) // Changed to 'data' to match n8n expectations
+    // Convert the file to an ArrayBuffer
+    const arrayBuffer = await videoFile.arrayBuffer()
 
     // Set up timeout for the request
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 60000) // 60 second timeout
 
     try {
-      // Send the request to n8n
-      const response = await fetch(webhookUrl, {
+      // Send the request to n8n with the video as raw binary data
+      const response = await fetch(webhookUrl.toString(), {
         method: "POST",
-        body: n8nFormData,
+        headers: {
+          "Content-Type": videoFile.type, // Set Content-Type to match the video file type
+        },
+        body: arrayBuffer, // Send the raw binary data
         signal: controller.signal,
       })
 
