@@ -66,65 +66,73 @@ export default function UploadPage() {
     setError(null)
     setApiError(null)
 
-    // Create a progress simulation
-    const uploadInterval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(uploadInterval)
-          return 90
-        }
-        return prev + 10
-      })
-    }, 300)
+    if (!videoFile) {
+      setError("No video file selected")
+      setIsUploading(false)
+      return
+    }
+
+    // Get the webhook URL
+    const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
+
+    // Add query parameters for the other form data
+    const url = new URL(webhookUrl)
+    url.searchParams.append("email", email)
+    url.searchParams.append("category", category)
+    url.searchParams.append("subscribeToTips", subscribeToTips.toString())
+
+    // Use XMLHttpRequest for better control and progress tracking
+    const xhr = new XMLHttpRequest()
+
+    // Set up progress tracking
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100)
+        setUploadProgress(percentComplete)
+        console.log(`Upload progress: ${percentComplete}%`)
+      }
+    }
+
+    // Set up completion handler
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        console.log("Upload successful:", xhr.responseText)
+        setUploadProgress(100)
+        setTimeout(() => {
+          setIsUploading(false)
+          router.push("/confirmation")
+        }, 500)
+      } else {
+        console.error("Upload failed:", xhr.status, xhr.statusText, xhr.responseText)
+        setApiError(`Upload failed: ${xhr.status} ${xhr.statusText}`)
+        setIsUploading(false)
+        setUploadProgress(0)
+      }
+    }
+
+    // Set up error handler
+    xhr.onerror = () => {
+      console.error("Network error during upload")
+      setApiError("Network error during upload. Please check your connection and try again.")
+      setIsUploading(false)
+      setUploadProgress(0)
+    }
+
+    // Open and send the request
+    xhr.open("POST", url.toString(), true)
+    xhr.setRequestHeader("Content-Type", videoFile.type)
+
+    console.log("Starting upload to:", url.toString())
+    console.log("File type:", videoFile.type)
+    console.log("File size:", videoFile.size, "bytes")
 
     try {
-      if (!videoFile) {
-        throw new Error("No video file selected")
-      }
-
-      // Get the webhook URL
-      const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
-
-      // Add query parameters for the other form data
-      const url = new URL(webhookUrl)
-      url.searchParams.append("email", email)
-      url.searchParams.append("category", category)
-      url.searchParams.append("subscribeToTips", subscribeToTips.toString())
-
-      console.log("Submitting to webhook:", url.toString())
-
-      // Send the video file as binary data directly
-      const response = await fetch(url.toString(), {
-        method: "POST",
-        headers: {
-          "Content-Type": videoFile.type, // Use the file's MIME type
-        },
-        body: videoFile, // Send the file directly as the request body
-      })
-
-      console.log("Response status:", response.status)
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error("Error response:", errorText)
-        throw new Error(`Failed to submit form: ${response.status} ${errorText}`)
-      }
-
-      // Complete the progress bar
-      setUploadProgress(100)
-
-      // Clear the interval and redirect to confirmation page
-      clearInterval(uploadInterval)
-      setTimeout(() => {
-        setIsUploading(false)
-        router.push("/confirmation")
-      }, 500)
+      xhr.send(videoFile)
     } catch (err) {
-      console.error("Error submitting form:", err)
+      console.error("Error sending file:", err)
       setApiError(err instanceof Error ? err.message : "An unexpected error occurred during upload")
       setIsUploading(false)
       setUploadProgress(0)
-      clearInterval(uploadInterval)
     }
   }
 
