@@ -9,17 +9,15 @@ export async function POST(request: NextRequest) {
     const email = formData.get("email") as string
     const category = formData.get("category") as string
     const subscribeToTips = formData.get("subscribeToTips") as string
-    const videoFile = formData.get("video") as File
+    const videoFile = formData.get("file") as File
 
     if (!email || !videoFile) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    // Log the data we're about to send
-    console.log("Sending to n8n webhook:")
+    console.log("Processing upload request:")
     console.log("- Email:", email)
     console.log("- Category:", category)
-    console.log("- Subscribe to tips:", subscribeToTips)
     console.log("- Video file name:", videoFile.name)
     console.log("- Video file type:", videoFile.type)
     console.log("- Video file size:", videoFile.size, "bytes")
@@ -27,36 +25,51 @@ export async function POST(request: NextRequest) {
     // Get the webhook URL
     const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
 
-    // Add query parameters for the other form data
-    const url = new URL(webhookUrl)
-    url.searchParams.append("email", email)
-    url.searchParams.append("category", category)
-    url.searchParams.append("subscribeToTips", subscribeToTips)
+    // Create a new FormData to send to n8n
+    const n8nFormData = new FormData()
+    n8nFormData.append("email", email)
+    n8nFormData.append("category", category)
+    n8nFormData.append("subscribeToTips", subscribeToTips)
+    n8nFormData.append("file", videoFile)
 
-    // Convert the file to an ArrayBuffer
-    const arrayBuffer = await videoFile.arrayBuffer()
+    // Set up timeout for the request
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 60000) // 60 second timeout
 
-    // Send the request to n8n
-    const response = await fetch(url.toString(), {
-      method: "POST",
-      headers: {
-        "Content-Type": videoFile.type,
-      },
-      body: arrayBuffer,
-    })
+    try {
+      // Send the request to n8n
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        body: n8nFormData,
+        signal: controller.signal,
+      })
 
-    // Check if the request was successful
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error("Error from n8n:", response.status, response.statusText, errorText)
-      return NextResponse.json(
-        { error: `Error from n8n: ${response.status} ${response.statusText}` },
-        { status: response.status },
-      )
+      clearTimeout(timeoutId)
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("Error from n8n:", response.status, response.statusText, errorText)
+        return NextResponse.json(
+          { error: `Error from n8n: ${response.status} ${response.statusText}` },
+          { status: response.status },
+        )
+      }
+
+      // Return success response
+      return NextResponse.json({ success: true })
+    } catch (error) {
+      clearTimeout(timeoutId)
+      console.error("Error sending to n8n:", error)
+
+      if (error instanceof Error && error.name === "AbortError") {
+        return NextResponse.json(
+          { error: "Request timed out. The video may be too large or the server is busy." },
+          { status: 408 },
+        )
+      }
+
+      throw error // Re-throw to be caught by the outer try/catch
     }
-
-    // Return success response
-    return NextResponse.json({ success: true })
   } catch (error) {
     console.error("Error in upload API route:", error)
     return NextResponse.json(
