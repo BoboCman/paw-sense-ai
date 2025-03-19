@@ -15,6 +15,11 @@ import { Progress } from "@/components/ui/progress"
 import VideoUploader from "@/components/video-uploader"
 import { AlertCircle, CheckCircle, Info } from "lucide-react"
 
+interface UploadStatus {
+  state: "idle" | "uploading" | "success" | "error"
+  message?: string
+}
+
 export default function UploadPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
@@ -22,34 +27,32 @@ export default function UploadPage() {
   const [subscribeToTips, setSubscribeToTips] = useState(false)
   const [videoFile, setVideoFile] = useState<File | null>(null)
   const [uploadProgress, setUploadProgress] = useState(0)
-  const [isUploading, setIsUploading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [apiError, setApiError] = useState<string | null>(null)
+  const [uploadStatus, setUploadStatus] = useState<UploadStatus>({ state: "idle" })
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
-    if (error) setError(null)
+    if (uploadStatus.state === "error") setUploadStatus({ state: "idle" })
   }
 
   const handleVideoSelect = (file: File | null) => {
     setVideoFile(file)
-    if (error) setError(null)
+    if (uploadStatus.state === "error") setUploadStatus({ state: "idle" })
   }
 
   const validateForm = () => {
     if (!email) {
-      setError("Please enter your email address")
+      setUploadStatus({ state: "error", message: "Please enter your email address" })
       return false
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address")
+      setUploadStatus({ state: "error", message: "Please enter a valid email address" })
       return false
     }
 
     if (!videoFile) {
-      setError("Please select a video to upload")
+      setUploadStatus({ state: "error", message: "Please select a video to upload" })
       return false
     }
 
@@ -62,76 +65,75 @@ export default function UploadPage() {
     if (!validateForm()) return
 
     // Start upload process
-    setIsUploading(true)
-    setError(null)
-    setApiError(null)
+    setUploadStatus({ state: "uploading" })
+    setUploadProgress(0)
 
-    if (!videoFile) {
-      setError("No video file selected")
-      setIsUploading(false)
-      return
+    // Set up progress simulation
+    const progressInterval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 90) {
+          clearInterval(progressInterval)
+          return 90
+        }
+        return prev + 5
+      })
+    }, 500)
+
+    // Create form data
+    const formData = new FormData()
+    formData.append("email", email)
+    formData.append("category", category)
+    formData.append("subscribeToTips", subscribeToTips.toString())
+    if (videoFile) {
+      formData.append("file", videoFile) // Use 'file' as the key, matching what the API expects
     }
 
-    // Get the webhook URL
-    const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
-
-    // Add query parameters for the other form data
-    const url = new URL(webhookUrl)
-    url.searchParams.append("email", email)
-    url.searchParams.append("category", category)
-    url.searchParams.append("subscribeToTips", subscribeToTips.toString())
-
-    // Use XMLHttpRequest for better control and progress tracking
-    const xhr = new XMLHttpRequest()
-
-    // Set up progress tracking
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const percentComplete = Math.round((event.loaded / event.total) * 100)
-        setUploadProgress(percentComplete)
-        console.log(`Upload progress: ${percentComplete}%`)
-      }
-    }
-
-    // Set up completion handler
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        console.log("Upload successful:", xhr.responseText)
-        setUploadProgress(100)
-        setTimeout(() => {
-          setIsUploading(false)
-          router.push("/confirmation")
-        }, 500)
-      } else {
-        console.error("Upload failed:", xhr.status, xhr.statusText, xhr.responseText)
-        setApiError(`Upload failed: ${xhr.status} ${xhr.statusText}`)
-        setIsUploading(false)
-        setUploadProgress(0)
-      }
-    }
-
-    // Set up error handler
-    xhr.onerror = () => {
-      console.error("Network error during upload")
-      setApiError("Network error during upload. Please check your connection and try again.")
-      setIsUploading(false)
-      setUploadProgress(0)
-    }
-
-    // Open and send the request
-    xhr.open("POST", url.toString(), true)
-    xhr.setRequestHeader("Content-Type", videoFile.type)
-
-    console.log("Starting upload to:", url.toString())
-    console.log("File type:", videoFile.type)
-    console.log("File size:", videoFile.size, "bytes")
+    // Set up timeout for the request
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 60000) // 60 second timeout
 
     try {
-      xhr.send(videoFile)
+      // Send to our API route
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+        signal: controller.signal,
+      })
+
+      clearTimeout(timeoutId)
+      clearInterval(progressInterval)
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to upload video")
+      }
+
+      // Complete the progress bar
+      setUploadProgress(100)
+      setUploadStatus({ state: "success" })
+
+      // Redirect to confirmation page
+      setTimeout(() => {
+        router.push("/confirmation")
+      }, 500)
     } catch (err) {
-      console.error("Error sending file:", err)
-      setApiError(err instanceof Error ? err.message : "An unexpected error occurred during upload")
-      setIsUploading(false)
+      clearTimeout(timeoutId)
+      clearInterval(progressInterval)
+
+      console.error("Error uploading video:", err)
+
+      if (err instanceof Error && err.name === "AbortError") {
+        setUploadStatus({
+          state: "error",
+          message: "Upload timed out. The video may be too large or the connection is slow.",
+        })
+      } else {
+        setUploadStatus({
+          state: "error",
+          message: err instanceof Error ? err.message : "An unexpected error occurred during upload",
+        })
+      }
+
       setUploadProgress(0)
     }
   }
@@ -150,21 +152,10 @@ export default function UploadPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {(error || apiError) && (
+            {uploadStatus.state === "error" && uploadStatus.message && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  {error || apiError}
-                  {apiError && (
-                    <Button
-                      variant="link"
-                      className="p-0 h-auto text-xs text-white underline ml-2"
-                      onClick={() => console.log("Check console for detailed error information")}
-                    >
-                      See console for details
-                    </Button>
-                  )}
-                </AlertDescription>
+                <AlertDescription>{uploadStatus.message}</AlertDescription>
               </Alert>
             )}
 
@@ -219,7 +210,7 @@ export default function UploadPage() {
               </div>
             </div>
 
-            {isUploading && (
+            {uploadStatus.state === "uploading" && (
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Uploading...</span>
@@ -244,8 +235,19 @@ export default function UploadPage() {
             </div>
 
             <div className="pt-2">
-              <Button type="submit" className="w-full bg-[#27ae60] hover:bg-[#219955]" disabled={isUploading}>
-                {isUploading ? "Uploading..." : "Submit Video for Analysis"}
+              <Button
+                type="submit"
+                className="w-full bg-[#27ae60] hover:bg-[#219955]"
+                disabled={uploadStatus.state === "uploading"}
+              >
+                {uploadStatus.state === "uploading" ? (
+                  <span className="flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                    Uploading...
+                  </span>
+                ) : (
+                  "Submit Video for Analysis"
+                )}
               </Button>
             </div>
           </form>
