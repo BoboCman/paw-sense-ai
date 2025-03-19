@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -11,130 +9,40 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Progress } from "@/components/ui/progress"
-import VideoUploader from "@/components/video-uploader"
-import { AlertCircle, CheckCircle, Info } from "lucide-react"
-
-interface UploadStatus {
-  state: "idle" | "uploading" | "success" | "error"
-  message?: string
-}
+import { CheckCircle, Info } from "lucide-react"
+import DirectVideoUploader from "@/components/direct-video-uploader" // Import the new component
 
 export default function UploadPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [category, setCategory] = useState("play")
   const [subscribeToTips, setSubscribeToTips] = useState(false)
-  const [videoFile, setVideoFile] = useState<File | null>(null)
-  const [uploadProgress, setUploadProgress] = useState(0)
-  const [uploadStatus, setUploadStatus] = useState<UploadStatus>({ state: "idle" })
+  const [emailError, setEmailError] = useState<string | null>(null)
+  const [showUploader, setShowUploader] = useState(false)
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
-    if (uploadStatus.state === "error") setUploadStatus({ state: "idle" })
+    setEmailError(null)
   }
 
-  const handleVideoSelect = (file: File | null) => {
-    setVideoFile(file)
-    if (uploadStatus.state === "error") setUploadStatus({ state: "idle" })
-  }
-
-  const validateForm = () => {
+  const validateEmail = () => {
     if (!email) {
-      setUploadStatus({ state: "error", message: "Please enter your email address" })
+      setEmailError("Please enter your email address")
       return false
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      setUploadStatus({ state: "error", message: "Please enter a valid email address" })
-      return false
-    }
-
-    if (!videoFile) {
-      setUploadStatus({ state: "error", message: "Please select a video to upload" })
+      setEmailError("Please enter a valid email address")
       return false
     }
 
     return true
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) return
-
-    // Start upload process
-    setUploadStatus({ state: "uploading" })
-    setUploadProgress(0)
-
-    // Set up progress simulation
-    const progressInterval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(progressInterval)
-          return 90
-        }
-        return prev + 5
-      })
-    }, 500)
-
-    // Create form data
-    const formData = new FormData()
-    formData.append("email", email)
-    formData.append("category", category)
-    formData.append("subscribeToTips", subscribeToTips.toString())
-    if (videoFile) {
-      formData.append("video", videoFile) // Using 'video' as the field name for our API route
-    }
-
-    // Set up timeout for the request
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 60000) // 60 second timeout
-
-    try {
-      // Send to our API route
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-        signal: controller.signal,
-      })
-
-      clearTimeout(timeoutId)
-      clearInterval(progressInterval)
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to upload video")
-      }
-
-      // Complete the progress bar
-      setUploadProgress(100)
-      setUploadStatus({ state: "success" })
-
-      // Redirect to confirmation page
-      setTimeout(() => {
-        router.push("/confirmation")
-      }, 500)
-    } catch (err) {
-      clearTimeout(timeoutId)
-      clearInterval(progressInterval)
-
-      console.error("Error uploading video:", err)
-
-      if (err instanceof Error && err.name === "AbortError") {
-        setUploadStatus({
-          state: "error",
-          message: "Upload timed out. The video may be too large or the connection is slow.",
-        })
-      } else {
-        setUploadStatus({
-          state: "error",
-          message: err instanceof Error ? err.message : "An unexpected error occurred during upload",
-        })
-      }
-
-      setUploadProgress(0)
+  const handleContinue = () => {
+    if (validateEmail()) {
+      setShowUploader(true)
     }
   }
 
@@ -151,11 +59,10 @@ export default function UploadPage() {
           <CardDescription>Please fill out the form below to submit your dog's video for analysis</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {uploadStatus.state === "error" && uploadStatus.message && (
+          <div className="space-y-6">
+            {emailError && (
               <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{uploadStatus.message}</AlertDescription>
+                <AlertDescription>{emailError}</AlertDescription>
               </Alert>
             )}
 
@@ -198,28 +105,6 @@ export default function UploadPage() {
               </RadioGroup>
             </div>
 
-            <div className="space-y-2">
-              <Label>Upload Video</Label>
-              <VideoUploader onFileSelect={handleVideoSelect} />
-              <div className="flex items-start gap-2 mt-2 text-sm text-gray-600">
-                <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <p>
-                  For best results, ensure good lighting and that your dog is clearly visible in the frame. Maximum file
-                  size: 100MB.
-                </p>
-              </div>
-            </div>
-
-            {uploadStatus.state === "uploading" && (
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Uploading...</span>
-                  <span>{uploadProgress}%</span>
-                </div>
-                <Progress value={uploadProgress} className="h-2" />
-              </div>
-            )}
-
             <div className="flex items-start space-x-2 pt-2">
               <Checkbox
                 id="subscribe"
@@ -234,23 +119,34 @@ export default function UploadPage() {
               </div>
             </div>
 
-            <div className="pt-2">
-              <Button
-                type="submit"
-                className="w-full bg-[#27ae60] hover:bg-[#219955]"
-                disabled={uploadStatus.state === "uploading"}
-              >
-                {uploadStatus.state === "uploading" ? (
-                  <span className="flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
-                    Uploading...
-                  </span>
-                ) : (
-                  "Submit Video for Analysis"
-                )}
-              </Button>
-            </div>
-          </form>
+            {!showUploader ? (
+              <div className="pt-2">
+                <Button
+                  type="button"
+                  onClick={handleContinue}
+                  className="w-full bg-[#27ae60] hover:bg-[#219955]"
+                >
+                  Continue to Upload
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Label>Upload Video</Label>
+                <DirectVideoUploader
+                  email={email}
+                  category={category}
+                  subscribeToTips={subscribeToTips}
+                />
+                <div className="flex items-start gap-2 mt-2 text-sm text-gray-600">
+                  <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <p>
+                    For best results, ensure good lighting and that your dog is clearly visible in the frame. Maximum file
+                    size: 100MB.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -271,4 +167,3 @@ export default function UploadPage() {
     </div>
   )
 }
-
