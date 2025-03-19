@@ -78,25 +78,28 @@ export default function UploadPage() {
     }, 300)
 
     try {
-      // Create form data to send to n8n
-      const formData = new FormData()
-      formData.append("email", email)
-      formData.append("category", category)
-      formData.append("subscribeToTips", subscribeToTips.toString())
-      if (videoFile) {
-        formData.append("video", videoFile)
+      if (!videoFile) {
+        throw new Error("No video file selected")
       }
 
-      // Use the specific n8n webhook URL
+      // Get the webhook URL
       const webhookUrl = "https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp"
 
-      console.log("Submitting to webhook:", webhookUrl)
+      // Add query parameters for the other form data
+      const url = new URL(webhookUrl)
+      url.searchParams.append("email", email)
+      url.searchParams.append("category", category)
+      url.searchParams.append("subscribeToTips", subscribeToTips.toString())
 
-      // Send data to n8n webhook
-      const response = await fetch(webhookUrl, {
+      console.log("Submitting to webhook:", url.toString())
+
+      // Send the video file as binary data directly
+      const response = await fetch(url.toString(), {
         method: "POST",
-        body: formData,
-        // Don't set Content-Type header - it will be automatically set with the boundary for FormData
+        headers: {
+          "Content-Type": videoFile.type, // Use the file's MIME type
+        },
+        body: videoFile, // Send the file directly as the request body
       })
 
       console.log("Response status:", response.status)
