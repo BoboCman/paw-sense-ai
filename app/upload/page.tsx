@@ -85,7 +85,7 @@ export default function UploadPage() {
     formData.append("category", category)
     formData.append("subscribeToTips", subscribeToTips.toString())
     if (videoFile) {
-      formData.append("data", videoFile) // Changed to 'data' to match n8n expectations
+      formData.append("video", videoFile) // Using 'video' as the field name for our API route
     }
 
     // Set up timeout for the request
