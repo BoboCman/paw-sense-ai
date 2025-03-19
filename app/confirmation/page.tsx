@@ -13,7 +13,9 @@ export default function ConfirmationPage() {
       </div>
 
       <h1 className="text-3xl font-bold mb-2">Video Successfully Uploaded!</h1>
-      <p className="text-xl text-gray-600 mb-8">Thank you for submitting your dog's video for analysis</p>
+      <p className="text-xl text-gray-600 mb-8">
+        Thank you for taking this important step toward understanding your dog's natural behavior
+      </p>
 
       <Card className="mb-8">
         <CardContent className="pt-6">
@@ -23,7 +25,8 @@ export default function ConfirmationPage() {
               <div className="text-left">
                 <h3 className="font-semibold text-lg">Check Your Email</h3>
                 <p className="text-gray-600">
-                  We'll send your detailed analysis report to the email address you provided.
+                  We'll send your comprehensive behavior analysis with customized training exercises to the email
+                  address you provided.
                 </p>
               </div>
             </div>
@@ -63,7 +66,8 @@ export default function ConfirmationPage() {
             <div>
               <p className="font-medium">Our AI analyzes your video</p>
               <p className="text-sm text-gray-600">
-                PawSense AI examines your dog's body language, movements, and behavioral patterns.
+                PawSense AI examines your dog's energy states, body language signals, posture transitions, and pack
+                communication patterns.
               </p>
             </div>
           </li>
@@ -75,7 +79,8 @@ export default function ConfirmationPage() {
             <div>
               <p className="font-medium">We generate personalized insights</p>
               <p className="text-sm text-gray-600">
-                Based on the analysis, we create a detailed report with observations and recommendations.
+                Based on the analysis, we create a detailed report with energy state assessment, relationship dynamics,
+                and specific training exercises tailored to your dog's needs.
               </p>
             </div>
           </li>
