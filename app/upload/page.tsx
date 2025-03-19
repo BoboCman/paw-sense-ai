@@ -55,26 +55,63 @@ export default function UploadPage() {
     return true
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!validateForm()) return
 
-    // Simulate upload process
+    // Start upload process
     setIsUploading(true)
     setError(null)
 
-    const uploadInterval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(uploadInterval)
-          setIsUploading(false)
-          router.push("/confirmation")
-          return 100
-        }
-        return prev + 10
+    try {
+      // Create form data
+      const formData = new FormData()
+      formData.append("email", email)
+      formData.append("category", category)
+      formData.append("subscribeToTips", subscribeToTips.toString())
+      if (videoFile) {
+        formData.append("video", videoFile)
+      }
+
+      // Set up progress simulation
+      const progressInterval = setInterval(() => {
+        setUploadProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(progressInterval)
+            return 90
+          }
+          return prev + 5
+        })
+      }, 500)
+
+      // Send to our API route instead of directly to n8n
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
       })
-    }, 300)
+
+      clearInterval(progressInterval)
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to upload video")
+      }
+
+      // Complete the progress bar
+      setUploadProgress(100)
+
+      // Redirect to confirmation page
+      setTimeout(() => {
+        setIsUploading(false)
+        router.push("/confirmation")
+      }, 500)
+    } catch (err) {
+      console.error("Error uploading video:", err)
+      setError(err instanceof Error ? err.message : "An unexpected error occurred during upload")
+      setIsUploading(false)
+      setUploadProgress(0)
+    }
   }
 
   return (
