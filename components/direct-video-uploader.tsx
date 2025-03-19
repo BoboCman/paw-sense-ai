@@ -1,23 +1,20 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, CheckCircle } from "lucide-react"
 
-// This component handles direct upload to n8n, bypassing the Next.js API
-export default function DirectVideoUploader({
-  email,
-  category,
-  subscribeToTips,
-}: {
-  email: string
-  category: string
-  subscribeToTips: boolean
+export default function DirectVideoUploader({ 
+  email, 
+  category, 
+  subscribeToTips 
+}: { 
+  email: string; 
+  category: string; 
+  subscribeToTips: boolean;
 }) {
   const [file, setFile] = useState<File | null>(null)
   const [isUploading, setIsUploading] = useState(false)
@@ -41,11 +38,10 @@ export default function DirectVideoUploader({
     setIsUploading(true)
     setUploadProgress(0)
     setError(null)
-    setSuccess(false)
 
     // Create progress simulation
     const progressInterval = setInterval(() => {
-      setUploadProgress((prev) => {
+      setUploadProgress(prev => {
         if (prev >= 90) {
           clearInterval(progressInterval)
           return 90
@@ -55,20 +51,15 @@ export default function DirectVideoUploader({
     }, 500)
 
     try {
-      // Check if the environment variable is set
-      if (!process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL) {
-        throw new Error("Upload configuration error. Please contact support.")
-      }
-
       // Build the URL with query parameters
-      const url = new URL(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL)
+      const url = new URL("https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp")
       url.searchParams.append("email", email)
       url.searchParams.append("category", category)
       url.searchParams.append("subscribeToTips", subscribeToTips.toString())
 
       // Read the file as an ArrayBuffer
       const arrayBuffer = await file.arrayBuffer()
-
+      
       // Upload directly to n8n webhook
       const response = await fetch(url.toString(), {
         method: "POST",
@@ -98,6 +89,37 @@ export default function DirectVideoUploader({
     }
   }
 
+  const resetUploader = () => {
+    setFile(null)
+    setSuccess(false)
+    setError(null)
+    setUploadProgress(0)
+  }
+
+  // If upload was successful, show success message and option to upload another
+  if (success) {
+    return (
+      <div className="space-y-4">
+        <Alert className="bg-green-50 border-green-200">
+          <CheckCircle className="h-5 w-5 text-green-500" />
+          <AlertDescription className="text-green-800 font-medium">
+            Video uploaded successfully!
+          </AlertDescription>
+        </Alert>
+        <p className="text-sm text-gray-600">
+          Your video is now being processed. We'll send the analysis report to your email once it's ready.
+        </p>
+        <Button
+          type="button"
+          onClick={resetUploader}
+          className="w-full bg-blue-500 hover:bg-blue-600"
+        >
+          Upload Another Video
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       {error && (
@@ -106,13 +128,7 @@ export default function DirectVideoUploader({
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
-
-      {success && (
-        <Alert className="bg-green-50 border-green-200 text-green-800">
-          <AlertDescription>Video uploaded successfully!</AlertDescription>
-        </Alert>
-      )}
-
+      
       <div className="space-y-2">
         <Label htmlFor="video-file">Select Video File</Label>
         <input
@@ -128,13 +144,9 @@ export default function DirectVideoUploader({
                     file:bg-gray-100 file:text-gray-700
                     hover:file:bg-gray-200"
         />
-        {file && (
-          <p className="text-sm text-gray-500">
-            Selected: {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
-          </p>
-        )}
+        {file && <p className="text-sm text-gray-500">Selected: {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)</p>}
       </div>
-
+      
       {isUploading && (
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
@@ -144,7 +156,7 @@ export default function DirectVideoUploader({
           <Progress value={uploadProgress} className="h-2" />
         </div>
       )}
-
+      
       <Button
         type="button"
         onClick={uploadDirectly}
@@ -163,4 +175,3 @@ export default function DirectVideoUploader({
     </div>
   )
 }
-
