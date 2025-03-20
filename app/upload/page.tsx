@@ -9,7 +9,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CheckCircle, Info } from "lucide-react"
 import DirectVideoUploader from "@/components/direct-video-uploader" // Import the new component
@@ -18,7 +17,6 @@ export default function UploadPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [category, setCategory] = useState("play")
-  const [subscribeToTips, setSubscribeToTips] = useState(false)
   const [emailError, setEmailError] = useState<string | null>(null)
   const [showUploader, setShowUploader] = useState(false)
 
@@ -86,42 +84,69 @@ export default function UploadPage() {
 
             <div className="space-y-3">
               <Label>Behavior Category to Analyze</Label>
-              <RadioGroup value={category} onValueChange={setCategory}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="play" id="play" />
-                  <Label htmlFor="play">Play behavior & energy states</Label>
+              <RadioGroup value={category} onValueChange={setCategory} className="space-y-4">
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="play" id="play" />
+                    <Label htmlFor="play" className="font-medium">
+                      Play behavior & energy states
+                    </Label>
+                  </div>
+                  <p className="text-sm text-gray-500 ml-6">
+                    Videos showing how your dog's energy changes during play with toys, people, or other dogs.
+                  </p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="dog-interaction" id="dog-interaction" />
-                  <Label htmlFor="dog-interaction">Dog-to-dog pack dynamics</Label>
+
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="dog-interaction" id="dog-interaction" />
+                    <Label htmlFor="dog-interaction" className="font-medium">
+                      Dog-to-dog pack dynamics
+                    </Label>
+                  </div>
+                  <p className="text-sm text-gray-500 ml-6">
+                    Interactions between your dog and other dogs showing communication patterns and social
+                    relationships.
+                  </p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="commands" id="commands" />
-                  <Label htmlFor="commands">Response to leadership & boundaries</Label>
+
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="commands" id="commands" />
+                    <Label htmlFor="commands" className="font-medium">
+                      Response to leadership & boundaries
+                    </Label>
+                  </div>
+                  <p className="text-sm text-gray-500 ml-6">
+                    How your dog responds to commands, training, or when you establish rules and boundaries.
+                  </p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="home" id="home" />
-                  <Label htmlFor="home">Home behavior</Label>
+
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="home" id="home" />
+                    <Label htmlFor="home" className="font-medium">
+                      Home behavior
+                    </Label>
+                  </div>
+                  <p className="text-sm text-gray-500 ml-6">
+                    Everyday behaviors around the house including relaxation patterns and routines.
+                  </p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="concerning" id="concerning" />
-                  <Label htmlFor="concerning">Concerning behavior</Label>
+
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="concerning" id="concerning" />
+                    <Label htmlFor="concerning" className="font-medium">
+                      Concerning behavior
+                    </Label>
+                  </div>
+                  <p className="text-sm text-gray-500 ml-6">
+                    Behaviors that worry you, such as excessive barking, anxiety, or negative reactions to specific
+                    triggers.
+                  </p>
                 </div>
               </RadioGroup>
-            </div>
-
-            <div className="flex items-start space-x-2 pt-2">
-              <Checkbox
-                id="subscribe"
-                checked={subscribeToTips}
-                onCheckedChange={(checked) => setSubscribeToTips(checked as boolean)}
-              />
-              <div className="grid gap-1.5 leading-none">
-                <Label htmlFor="subscribe" className="text-sm font-normal">
-                  Send me weekly dog training tips and advice
-                </Label>
-                <p className="text-xs text-gray-500">You can unsubscribe at any time. We respect your privacy.</p>
-              </div>
             </div>
 
             {!showUploader ? (
@@ -133,7 +158,7 @@ export default function UploadPage() {
             ) : (
               <div className="space-y-2">
                 <Label>Upload Video</Label>
-                <DirectVideoUploader email={email} category={category} subscribeToTips={subscribeToTips} />
+                <DirectVideoUploader email={email} category={category} />
                 <div className="flex items-start gap-2 mt-2 text-sm text-gray-600">
                   <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <p>
@@ -154,7 +179,7 @@ export default function UploadPage() {
             <h3 className="font-medium text-blue-800">Energy & Behavior Recording Tips</h3>
             <ul className="mt-2 space-y-1 text-sm text-blue-700">
               <li>• Record in a well-lit area where your dog's natural energy state is visible</li>
-              <li>• Capture 1-3 minutes showing transitions between energy states and behaviors</li>
+              <li>• Capture 10-45 seconds showing transitions between energy states and behaviors</li>
               <li>• Try to record at dog-level height when possible</li>
               <li>• Include environmental context that might influence your dog's energy and response</li>
             </ul>
