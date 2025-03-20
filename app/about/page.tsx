@@ -113,19 +113,16 @@ export default function AboutPage() {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4">Our Technology</h3>
             <p className="text-gray-700 mb-4">
-              PawSense AI uses a combination of computer vision and machine learning models specifically trained on
-              canine behavior patterns.
+              PawSense AI uses a combination of computer vision and machine learning models designed to recognize and interpret canine body language and behavior patterns.
             </p>
             <p className="text-gray-700 mb-4">
-              Our system can identify over 50 distinct canine behaviors and communication signals, from subtle calming
-              signals to pack hierarchy indicators, ears positions to tail carriage patterns.
+              Our system can identify key behavioral signals including posture changes, ear positioning, tail movement, and other important communication cues that dogs use to express their emotional and mental states.
             </p>
             <p className="text-gray-700 mb-4">
-              The AI has been trained on thousands of hours of dog video footage, reviewed and annotated by professional
-              dog trainers and animal behaviorists.
+             The system is built on established principles of canine behavior science, drawing from publicly available research and knowledge bases about dog behavior and training methodologies.
             </p>
             <p className="text-gray-700">
-              We continuously improve our models based on new research in canine cognition and behavior science.
+              We regularly update our approach based on ongoing research in dog cognition and behavior to provide you with the most relevant and effective insights.
             </p>
           </div>
         </div>
