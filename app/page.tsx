@@ -324,7 +324,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to better understand your dog?</h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Upload a video today and receive detailed insights within 15 minutes.
+            Upload a video today and receive detailed insights to your inbox within minutes.
           </p>
           <Link href="/upload">
             <Button size="lg" variant="outline" className="bg-white text-[#27ae60] hover:bg-gray-100 border-white">
