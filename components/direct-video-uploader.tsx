@@ -20,17 +20,35 @@ export default function DirectVideoUploader({
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
-  // Function to get category description from category value
-  const getCategoryDescription = (categoryValue: string): string => {
-    const categoryMap: Record<string, string> = {
-      "play": "Play behavior & energy states",
-      "dog-interaction": "Dog-to-dog pack dynamics",
-      "commands": "Response to leadership & boundaries",
-      "home": "Home behavior",
-      "concerning": "Concerning behavior"
+  // Function to get category description and explanatory text
+  const getCategoryInfo = (categoryValue: string): { title: string; description: string } => {
+    const categoryMap: Record<string, { title: string; description: string }> = {
+      "play": {
+        title: "Play behavior & energy states",
+        description: "Videos showing how your dog's energy changes during play with toys, people, or other dogs."
+      },
+      "dog-interaction": {
+        title: "Dog-to-dog pack dynamics",
+        description: "Interactions between your dog and other dogs showing communication patterns and social relationships."
+      },
+      "commands": {
+        title: "Response to leadership & boundaries",
+        description: "How your dog responds to commands, training, or when you establish rules and boundaries."
+      },
+      "home": {
+        title: "Home behavior",
+        description: "Everyday behaviors around the house including relaxation patterns and routines."
+      },
+      "concerning": {
+        title: "Concerning behavior",
+        description: "Behaviors that worry you, such as excessive barking, anxiety, or negative reactions to specific triggers."
+      }
     };
     
-    return categoryMap[categoryValue] || categoryValue;
+    return categoryMap[categoryValue] || { 
+      title: categoryValue, 
+      description: "No description available" 
+    };
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,9 +87,12 @@ export default function DirectVideoUploader({
     try {
       // Build the URL with query parameters
       const url = new URL(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL)
+      const categoryInfo = getCategoryInfo(category);
+      
       url.searchParams.append("email", email)
       url.searchParams.append("category", category)
-      url.searchParams.append("categoryDescription", getCategoryDescription(category))
+      url.searchParams.append("categoryTitle", categoryInfo.title)
+      url.searchParams.append("categoryDescription", categoryInfo.description)
 
       // Read the file as an ArrayBuffer
       const arrayBuffer = await file.arrayBuffer()
