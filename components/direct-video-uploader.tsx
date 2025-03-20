@@ -9,18 +9,29 @@ import { AlertCircle, CheckCircle } from "lucide-react"
 
 export default function DirectVideoUploader({ 
   email, 
-  category, 
-  subscribeToTips 
+  category
 }: { 
   email: string; 
-  category: string; 
-  subscribeToTips: boolean;
+  category: string;
 }) {
   const [file, setFile] = useState<File | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+
+  // Function to get category description from category value
+  const getCategoryDescription = (categoryValue: string): string => {
+    const categoryMap: Record<string, string> = {
+      "play": "Play behavior & energy states",
+      "dog-interaction": "Dog-to-dog pack dynamics",
+      "commands": "Response to leadership & boundaries",
+      "home": "Home behavior",
+      "concerning": "Concerning behavior"
+    };
+    
+    return categoryMap[categoryValue] || categoryValue;
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -32,6 +43,11 @@ export default function DirectVideoUploader({
   const uploadDirectly = async () => {
     if (!file) {
       setError("Please select a video file")
+      return
+    }
+
+    if (!process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL) {
+      setError("Configuration error: Webhook URL not defined")
       return
     }
 
@@ -52,10 +68,10 @@ export default function DirectVideoUploader({
 
     try {
       // Build the URL with query parameters
-      const url = new URL("https://financialplanner-ai.app.n8n.cloud/webhook/upload-cfp")
+      const url = new URL(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL)
       url.searchParams.append("email", email)
       url.searchParams.append("category", category)
-      url.searchParams.append("subscribeToTips", subscribeToTips.toString())
+      url.searchParams.append("categoryDescription", getCategoryDescription(category))
 
       // Read the file as an ArrayBuffer
       const arrayBuffer = await file.arrayBuffer()
