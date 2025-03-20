@@ -82,9 +82,10 @@ export default function Home() {
       {/* Sample Analysis */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Sample Analysis Report</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Comprehensive Behavior Analysis</h2>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-8">
-            Here's an example of the detailed analysis you'll receive after uploading your dog's video.
+            Each PawSense AI report delivers deep insights into your dog's natural behavior patterns through six
+            essential areas of analysis:
           </p>
 
           <div className="max-w-3xl mx-auto bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden">
@@ -96,65 +97,182 @@ export default function Home() {
             <div className="p-6">
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg font-medium">Key Observations</AccordionTrigger>
+                  <AccordionTrigger className="text-lg font-medium">Overview</AccordionTrigger>
                   <AccordionContent>
+                    <p className="mb-4">
+                      A clear assessment of your dog's overall behavioral state and social dynamics, establishing the
+                      foundation for understanding their needs.
+                    </p>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-[#27ae60] mt-0.5 flex-shrink-0" />
-                        <span>Displays high energy play style with frequent bouncing and play bows</span>
+                        <span>Displays balanced energy with good social awareness</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-[#27ae60] mt-0.5 flex-shrink-0" />
-                        <span>Gentle mouth pressure during toy play - good bite inhibition</span>
+                        <span>Shows appropriate play style with clear communication signals</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-[#27ae60] mt-0.5 flex-shrink-0" />
-                        <span>Occasional pausing to check in with owner - good social referencing</span>
+                        <span>Demonstrates healthy relationship dynamics with owner</span>
                       </li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-lg font-medium">Behavioral Insights</AccordionTrigger>
+                  <AccordionTrigger className="text-lg font-medium">Energy State Analysis</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      Your dog shows a balanced play style with appropriate energy levels for the breed and age. The
-                      frequent play bows indicate a healthy social communication style and desire to engage.
+                      Detailed evaluation of your dog's energy levels, from active-excited to calm-surrender states,
+                      with specific indicators of their emotional balance.
                     </p>
-                    <p>
-                      The periodic check-ins with you during play demonstrate a good attachment bond and awareness of
-                      your presence as a source of security.
-                    </p>
+                    <ul className="space-y-3">
+                      <li className="pb-3 border-b border-gray-100">
+                        <h4 className="font-medium text-[#2980b9]">Identification of energy transitions</h4>
+                        <p className="text-gray-600 mt-1">
+                          Your dog shows smooth transitions between play and rest states, indicating good emotional
+                          regulation.
+                        </p>
+                      </li>
+                      <li className="pb-3 border-b border-gray-100">
+                        <h4 className="font-medium text-[#2980b9]">Relaxation vs. arousal patterns</h4>
+                        <p className="text-gray-600 mt-1">
+                          Demonstrates appropriate arousal during play with periodic self-regulation through brief
+                          pauses.
+                        </p>
+                      </li>
+                      <li>
+                        <h4 className="font-medium text-[#2980b9]">Environmental energy responses</h4>
+                        <p className="text-gray-600 mt-1">
+                          Shows appropriate energy adjustment based on environmental context and owner cues.
+                        </p>
+                      </li>
+                    </ul>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-3">
-                  <AccordionTrigger className="text-lg font-medium">Recommendations</AccordionTrigger>
+                  <AccordionTrigger className="text-lg font-medium">Relationship Dynamics</AccordionTrigger>
                   <AccordionContent>
+                    <p className="mb-4">
+                      Analysis of how your dog relates to other animals, humans, and their environment, revealing their
+                      social communication style.
+                    </p>
                     <ul className="space-y-3">
                       <li className="pb-3 border-b border-gray-100">
-                        <h4 className="font-medium text-[#2980b9]">Continue Varied Play Sessions</h4>
+                        <h4 className="font-medium text-[#2980b9]">Social confidence indicators</h4>
                         <p className="text-gray-600 mt-1">
-                          Your dog benefits from the diverse play styles observed. Continue offering both fetch and tug
-                          games to provide physical and mental stimulation.
+                          Your dog displays healthy confidence without dominance issues, showing appropriate social
+                          engagement.
                         </p>
                       </li>
                       <li className="pb-3 border-b border-gray-100">
-                        <h4 className="font-medium text-[#2980b9]">Introduce Impulse Control Games</h4>
+                        <h4 className="font-medium text-[#2980b9]">Leadership/follower tendencies</h4>
                         <p className="text-gray-600 mt-1">
-                          To balance the high energy, incorporate more "wait" and "stay" commands during play to build
-                          impulse control.
+                          Demonstrates good follower behavior with periodic check-ins, indicating recognition of your
+                          leadership position.
                         </p>
                       </li>
                       <li>
-                        <h4 className="font-medium text-[#2980b9]">Socialization Opportunities</h4>
+                        <h4 className="font-medium text-[#2980b9]">Resource-sharing behavior</h4>
                         <p className="text-gray-600 mt-1">
-                          The play style observed would translate well to dog-dog interactions. Consider supervised play
-                          dates with compatible dogs.
+                          Shows healthy toy-sharing behavior without resource guarding, indicating balanced pack
+                          dynamics.
                         </p>
                       </li>
                     </ul>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-lg font-medium">Key Behavioral Indicators</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-4">
+                      Specific behaviors that reveal your dog's psychological state and needs, identifying patterns that
+                      may not be obvious to the untrained eye.
+                    </p>
+                    <ul className="space-y-3">
+                      <li className="pb-3 border-b border-gray-100">
+                        <h4 className="font-medium text-[#2980b9]">Body language interpretation</h4>
+                        <p className="text-gray-600 mt-1">
+                          Relaxed ear position and fluid tail movement indicate comfort and engagement during play.
+                        </p>
+                      </li>
+                      <li className="pb-3 border-b border-gray-100">
+                        <h4 className="font-medium text-[#2980b9]">Stress signal assessment</h4>
+                        <p className="text-gray-600 mt-1">
+                          Minimal stress signals observed, with appropriate calming signals during high-energy play.
+                        </p>
+                      </li>
+                      <li>
+                        <h4 className="font-medium text-[#2980b9]">Conflict resolution style</h4>
+                        <p className="text-gray-600 mt-1">
+                          Uses appropriate disengagement and redirection when play intensity increases.
+                        </p>
+                      </li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-lg font-medium">Training Approach Recommendations</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-4">
+                      Customized exercises designed specifically for your dog's needs, with practical implementation
+                      steps:
+                    </p>
+                    <ul className="space-y-3">
+                      <li className="pb-3 border-b border-gray-100">
+                        <h4 className="font-medium text-[#2980b9]">Structured Play Sessions</h4>
+                        <p className="text-gray-600 mt-1">
+                          <strong>Implementation:</strong> Begin and end play with clear signals, incorporate 30-second
+                          pauses every 2-3 minutes.
+                        </p>
+                        <p className="text-gray-600 mt-1">
+                          <strong>Success indicators:</strong> Dog looks to you for play initiation and respects pause
+                          signals.
+                        </p>
+                        <p className="text-gray-600 mt-1">
+                          <strong>Common mistakes:</strong> Inconsistent boundaries or allowing play to escalate without
+                          structure.
+                        </p>
+                      </li>
+                      <li>
+                        <h4 className="font-medium text-[#2980b9]">Impulse Control Exercise</h4>
+                        <p className="text-gray-600 mt-1">
+                          <strong>Implementation:</strong> Practice "wait" commands before access to toys, food, or
+                          attention.
+                        </p>
+                        <p className="text-gray-600 mt-1">
+                          <strong>Success indicators:</strong> Calm waiting behavior without whining or jumping.
+                        </p>
+                        <p className="text-gray-600 mt-1">
+                          <strong>Common mistakes:</strong> Rewarding too quickly or inconsistent enforcement of waiting
+                          period.
+                        </p>
+                      </li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-6">
+                  <AccordionTrigger className="text-lg font-medium">Key Training Principle</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-4">
+                      A fundamental insight about your dog's specific needs, delivered as a memorable principle you can
+                      apply consistently in your interactions.
+                    </p>
+                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                      <p className="text-[#2980b9] font-medium">
+                        "Structure before freedom creates confidence and calm. Your dog thrives when clear boundaries
+                        precede play and exploration."
+                      </p>
+                    </div>
+                    <p className="mt-4 text-gray-600">
+                      Our analysis provides the roadmap to creating harmony between you and your dog through
+                      understanding their natural communication.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
