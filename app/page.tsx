@@ -31,13 +31,13 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-1 mt-8 md:mt-0">
-              <div className="relative w-full max-w-md mx-auto aspect-video rounded-xl overflow-hidden shadow-2xl">
+              <div className="relative w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl">
                 <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Dog being analyzed by AI"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-eBeP9EnLg2AT2n3Q5DywyYRtVVeYBI.png"
+                  alt="Dog behavior illustration showing a dog on furniture"
                   width={600}
                   height={400}
-                  className="object-cover"
+                  className="w-full h-auto"
                   priority
                 />
               </div>
@@ -57,7 +57,7 @@ export default function Home() {
                 <span className="text-white text-2xl font-bold">1</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Upload Your Video</h3>
-              <p className="text-gray-600">Record your dog's behavior and upload it through our simple form</p>
+              <p className="text-gray-600">Record your dog's behavior and upload it through our simple form.</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -65,7 +65,7 @@ export default function Home() {
                 <span className="text-white text-2xl font-bold">2</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">AI Analysis</h3>
-              <p className="text-gray-600">Our advanced AI analyzes the video for behavioral patterns and cues</p>
+              <p className="text-gray-600">Our advanced AI analyzes the video for behavioral patterns and cues.</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -73,7 +73,7 @@ export default function Home() {
                 <span className="text-white text-2xl font-bold">3</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Receive Insights</h3>
-              <p className="text-gray-600">Get a detailed report with actionable training recommendations</p>
+              <p className="text-gray-600">Get a detailed report with actionable training recommendations.</p>
             </div>
           </div>
         </div>
@@ -324,7 +324,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to better understand your dog?</h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Upload a video today and receive a detailed report to your inbox within minutes
+            Upload a video today and receive detailed insights to your inbox within minutes.
           </p>
           <Link href="/upload">
             <Button size="lg" variant="outline" className="bg-white text-[#27ae60] hover:bg-gray-100 border-white">
