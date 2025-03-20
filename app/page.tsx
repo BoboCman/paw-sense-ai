@@ -33,7 +33,7 @@ export default function Home() {
             <div className="flex-1 mt-8 md:mt-0">
               <div className="relative w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-eBeP9EnLg2AT2n3Q5DywyYRtVVeYBI.png"
+                  src="https://phw1ruho25yy63z9.public.blob.vercel-storage.com/dog-owner-oDW5Gvp0aUVpMnzyOso2QasM3ducuA.avif"
                   alt="Dog behavior illustration showing a dog on furniture"
                   width={600}
                   height={400}
