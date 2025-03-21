@@ -1,4 +1,5 @@
 "use client"
+
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
 type User = {
@@ -44,11 +45,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Check if user is already logged in on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem("pawsense_user")
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
+    // Make sure we're in the browser environment before accessing localStorage
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("pawsense_user")
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser))
+        } catch (e) {
+          // Handle potential JSON parse error
+          console.error("Failed to parse stored user data", e)
+          localStorage.removeItem("pawsense_user")
+        }
+      }
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [])
 
   // Login function that checks against predefined credentials
@@ -68,13 +78,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     
     setUser(userInfo)
-    localStorage.setItem("pawsense_user", JSON.stringify(userInfo))
+    if (typeof window !== "undefined") {
+      localStorage.setItem("pawsense_user", JSON.stringify(userInfo))
+    }
     return true
   }
 
   const logout = () => {
     setUser(null)
-    localStorage.removeItem("pawsense_user")
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("pawsense_user")
+    }
   }
 
   const isPublicPath = (path: string): boolean => {
