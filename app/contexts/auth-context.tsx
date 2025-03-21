@@ -1,5 +1,4 @@
 "use client"
-
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
 type User = {
@@ -54,18 +53,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Login function that checks against predefined credentials
   const login = async (username: string, password: string) => {
-    const matchedUser = VALID_CREDENTIALS.find((cred) => cred.username === username && cred.password === password)
-
+    const matchedUser = VALID_CREDENTIALS.find(
+      (cred) => cred.username === username && cred.password === password
+    )
+    
     if (!matchedUser) {
       return false
     }
-
+    
     const userInfo: User = {
       username: matchedUser.username,
       fullName: matchedUser.fullName,
       role: matchedUser.role,
     }
-
+    
     setUser(userInfo)
     localStorage.setItem("pawsense_user", JSON.stringify(userInfo))
     return true
@@ -82,7 +83,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading, isPublicPath }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, login, logout, isLoading, isPublicPath }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 
@@ -93,4 +96,3 @@ export function useAuth() {
   }
   return context
 }
-
