@@ -1,4 +1,4 @@
-import LegalPagesWrapper from "../components/legal-pages-wrapper"
+import LegalPagesWrapper from "@/components/legal-pages-wrapper"
 
 export default function PrivacyPage() {
   return (
