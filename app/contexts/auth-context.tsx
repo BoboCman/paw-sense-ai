@@ -15,7 +15,7 @@ type Credentials = {
   role: string
 }
 
-// Predefined list of valid credentials
+// Predefined list of valid credentials - not displayed to users
 const VALID_CREDENTIALS: Credentials[] = [
   { username: "trainer1", password: "pawsense123", fullName: "Alex Johnson", role: "Dog Trainer" },
   { username: "owner2", password: "doggy456", fullName: "Sarah Williams", role: "Dog Owner" },
@@ -34,7 +34,6 @@ type AuthContextType = {
   login: (username: string, password: string) => Promise<boolean>
   logout: () => void
   isLoading: boolean
-  validCredentials: { username: string; password: string }[]
   isPublicPath: (path: string) => boolean
 }
 
@@ -43,9 +42,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-
-  // Extract just username and password for display purposes
-  const validCredentials = VALID_CREDENTIALS.map(({ username, password }) => ({ username, password }))
 
   // Check if user is already logged in on mount
   useEffect(() => {
@@ -86,9 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading, validCredentials, isPublicPath }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user, login, logout, isLoading, isPublicPath }}>{children}</AuthContext.Provider>
   )
 }
 
