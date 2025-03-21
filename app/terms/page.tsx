@@ -1,4 +1,4 @@
-import LegalPagesWrapper from "../components/legal-pages-wrapper"
+import LegalPagesWrapper from "@/components/legal-pages-wrapper"
 import Link from "next/link"
 
 export default function TermsPage() {
