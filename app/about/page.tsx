@@ -22,19 +22,18 @@ export default function AboutPage() {
           <div>
             <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
             <p className="text-gray-700 mb-4">
-              At PawSense AI, we believe that understanding your dog's energy and natural instincts is the foundation of
-              a strong human-canine bond. Our mission is to make professional-level dog behavior analysis accessible to
-              all dog owners, helping you establish calm leadership and clear boundaries.
+              PawSense AI believes that understanding your dog's emotional state and behavioral needs is the foundation of
+              a strong human-canine relationship. Our mission is to make professional-level dog behavior analysis accessible to
+              all dog owners, helping you establish clear communication and consistent boundaries.
             </p>
             <p className="text-gray-700 mb-4">
-              By leveraging artificial intelligence, we provide insights that help you read your dog's energy state,
-              body language, and pack instincts - leading to more balanced training and a harmonious relationship based
-              on mutual respect and clear communication.
+              By leveraging artificial intelligence, we provide insights that help you interpret your dog's emotional states,
+              body language, and social communication signals - leading to more effective training and a harmonious relationship based
+              on mutual understanding and positive engagement.
             </p>
             <p className="text-gray-700">
-              We're committed to promoting balanced training methods that address your dog's primal needs for exercise,
-              discipline, and affection—in that exact order—while respecting their unique personality and natural
-              instincts.
+              We're committed to promoting evidence-based training methods that address your dog's fundamental needs for physical exercise,
+              mental enrichment, and social connection while respecting their individual temperament, learning history, and unique personality.
             </p>
           </div>
           <div className="relative h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
