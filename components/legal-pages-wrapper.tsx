@@ -1,12 +1,19 @@
+"use client"
+
+import type React from "react"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { useAuth } from "../contexts/auth-context"
 
 export default function LegalPagesWrapper({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const { user } = useAuth()
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="space-y-8">
@@ -18,14 +25,19 @@ export default function LegalPagesWrapper({
               Back to Home
             </Button>
           </Link>
-          <Link href="/login">
-            <Button variant="outline" size="sm">
-              Log In
-            </Button>
-          </Link>
+
+          {!user && (
+            <Link href="/login">
+              <Button variant="outline" size="sm">
+                Log In
+              </Button>
+            </Link>
+          )}
         </div>
+
         {children}
       </div>
     </div>
   )
 }
+
