@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { PawPrint, Menu, X } from "lucide-react"
 import { usePathname } from "next/navigation"
+import UserMenu from "@/components/user-menu"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -44,16 +45,20 @@ export default function Navbar() {
             <Link href="/upload">
               <Button className="bg-[#27ae60] hover:bg-[#219955]">Upload Video</Button>
             </Link>
+            <UserMenu />
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center md:hidden">
+            <UserMenu />
+            <button
+              className="ml-2 p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -77,6 +82,29 @@ export default function Navbar() {
               <Link href="/upload" className="px-2 py-1" onClick={() => setIsMenuOpen(false)}>
                 <Button className="w-full bg-[#27ae60] hover:bg-[#219955]">Upload Video</Button>
               </Link>
+              <div className="border-t border-gray-100 pt-2">
+                <Link
+                  href="/terms"
+                  className="block px-2 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  href="/privacy"
+                  className="block px-2 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/cookie-policy"
+                  className="block px-2 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Cookie Policy
+                </Link>
+              </div>
             </nav>
           </div>
         )}
