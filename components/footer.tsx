@@ -60,18 +60,18 @@ export default function Footer() {
             <h3 className="font-semibold mb-3">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className="text-gray-600 hover:text-[#2980b9]">
+                <Link href="/privacy" className="text-gray-600 hover:text-[#2980b9]">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-[#2980b9]">
+                <Link href="/terms" className="text-gray-600 hover:text-[#2980b9]">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-600 hover:text-[#2980b9]">
-                  Contact Us
+                <Link href="/cookie-policy" className="text-gray-600 hover:text-[#2980b9]">
+                  Cookie Policy
                 </Link>
               </li>
             </ul>
