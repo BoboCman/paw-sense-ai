@@ -1,4 +1,4 @@
-import LegalPagesWrapper from "@/components/legal-pages-wrapper"
+import LegalPagesWrapper from "../components/legal-pages-wrapper"
 
 export default function CookiePolicyPage() {
   return (
@@ -50,7 +50,81 @@ export default function CookiePolicyPage() {
         </p>
       </section>
 
-      {/* Additional sections would continue in the same format */}
+      <section id="analytics">
+        <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">
+          Information Collected by our Analytics Software
+        </h2>
+        <p className="mb-4">
+          Some of the cookies we use are 'analytical' cookies. Our analytics software (Google Analytics, Facebook Pixel
+          and LinkedIn) allows us to recognize and count the number of visitors and to see how visitors move around the
+          Services when they are using the Services. This helps us to improve the way the Services work, e.g., by making
+          sure that users are finding what they need easily.
+        </p>
+        <p className="mb-4">The following types of information are collected by our analytics software:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>
+            User's demographic information, e.g., language preference and location (city, country/territory, continent,
+            sub-continental region).
+          </li>
+          <li>
+            User's behavior, e.g., whether the user is a new or returning visitor, the frequency of visits/date of last
+            visit.
+          </li>
+          <li>User's technology, e.g., operating system, network/service provider (ISP and network host).</li>
+          <li>
+            Mobile information, e.g. whether the user accessed the Services via a mobile device and, if so, the type of
+            device (brand, service provider, operating system and input selection method).
+          </li>
+          <li>
+            Traffic source, e.g., direct (i.e., the user typed in the URL themselves) or referral (i.e., the user
+            clicked on a link) and for referral traffic, the traffic source (search engine or link); also the Google
+            search term (if applicable) that resulted in the link to the Website.
+          </li>
+          <li>
+            Content viewed, e.g., pages, files, and directories clicked on, landing pages/exit pages and search words
+            (if any) used on the Website.
+          </li>
+        </ul>
+      </section>
+
+      <section id="changing-settings">
+        <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Changing your cookie settings</h2>
+        <p className="mb-4">
+          Please note that internet browsers allow you to change your cookie settings. These settings are usually found
+          in the 'options' or 'preferences' menu of your internet browser. In order to understand these settings, the
+          following links may be helpful. Otherwise you should use the 'Help' option in your internet browser for more
+          details.
+        </p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Cookie settings in Internet Explorer</li>
+          <li>Cookie settings in Firefox</li>
+          <li>Cookie settings in Chrome</li>
+          <li>Cookie settings in Safari</li>
+        </ul>
+      </section>
+
+      <section id="disabling">
+        <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Disabling cookies</h2>
+        <p className="mb-4">
+          If you do not want information collected through the use of cookies, please disable them by following the
+          instructions for your browser. Information about the procedure you are required to follow in order to disable
+          cookies can be found on https://www.allaboutcookies.org/manage-cookies/index.html.
+        </p>
+        <p className="mb-4">
+          After your initial visit to this website we may change the cookies we use. This cookies policy will always
+          allow you to know who is placing cookies, for what purpose and give you the means to disable them so you
+          should check it from time to time.
+        </p>
+        <p>Please be aware that if cookies are disabled not all features of the Services may operate as intended.</p>
+      </section>
+
+      <section id="contact">
+        <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Contact for More Information</h2>
+        <p>
+          If you have any questions about Financial Planner AI, LLC's cookies policies and practices, please send an
+          email to: rpc@financialplanner-ai.com.
+        </p>
+      </section>
 
       <div className="text-center text-sm text-gray-500 mt-12 pt-8 border-t">
         <p>Last Updated: March 21, 2025</p>
