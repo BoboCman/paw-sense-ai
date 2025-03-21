@@ -4,14 +4,13 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "../contexts/auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { PawPrint, ChevronDown, ChevronUp, Info, Shield } from "lucide-react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { PawPrint, Shield } from "lucide-react"
 import Link from "next/link"
 
 export default function LoginPage() {
@@ -19,8 +18,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [showCredentials, setShowCredentials] = useState(false)
-  const { login, validCredentials } = useAuth()
+  const { login } = useAuth()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,18 +31,13 @@ export default function LoginPage() {
       if (success) {
         router.push("/")
       } else {
-        setError("Invalid username or password. Please check the credentials list below.")
+        setError("Invalid username or password. Please contact your administrator for access.")
       }
     } catch (err) {
       setError("An error occurred during login. Please try again.")
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const setDemoCredentials = (username: string, password: string) => {
-    setUsername(username)
-    setPassword(password)
   }
 
   return (
@@ -100,46 +93,6 @@ export default function LoginPage() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col">
-          <Button
-            variant="ghost"
-            className="flex items-center justify-center w-full text-sm text-gray-500 mb-2"
-            onClick={() => setShowCredentials(!showCredentials)}
-          >
-            <span>Available Demo Credentials</span>
-            {showCredentials ? <ChevronUp className="ml-1 h-4 w-4" /> : <ChevronDown className="ml-1 h-4 w-4" />}
-          </Button>
-
-          {showCredentials && (
-            <div className="w-full mt-2 border rounded-md overflow-hidden">
-              <div className="bg-blue-50 p-2 flex items-center text-xs text-blue-700">
-                <Info className="h-4 w-4 mr-1" />
-                <span>Click on any row to auto-fill credentials</span>
-              </div>
-              <div className="max-h-60 overflow-y-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-1/2">Username</TableHead>
-                      <TableHead className="w-1/2">Password</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {validCredentials.map((cred) => (
-                      <TableRow
-                        key={cred.username}
-                        className="cursor-pointer hover:bg-gray-50"
-                        onClick={() => setDemoCredentials(cred.username, cred.password)}
-                      >
-                        <TableCell className="py-2">{cred.username}</TableCell>
-                        <TableCell className="py-2">{cred.password}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
-          )}
-
           {/* Security Notice */}
           <div className="w-full mt-4 p-3 bg-gray-50 rounded-md border border-gray-200">
             <div className="flex items-start gap-2">
