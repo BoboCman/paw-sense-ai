@@ -4,17 +4,17 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "../contexts/auth-context"
+import Link from "next/link"
+import { useAuth } from "../hooks/use-auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { PawPrint, Shield } from "lucide-react"
-import Link from "next/link"
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("")
+  const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -24,17 +24,25 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+
+    // Validate inputs
+    if (!userId.trim() || !password.trim()) {
+      setError("Please enter both username and password")
+      return
+    }
+
     setIsLoading(true)
 
     try {
-      const success = await login(username, password)
+      const success = await login(userId, password)
       if (success) {
         router.push("/")
       } else {
-        setError("Invalid username or password. Please contact your administrator for access.")
+        setError("Invalid username or password. Please try again.")
       }
     } catch (err) {
       setError("An error occurred during login. Please try again.")
+      console.error("Login error:", err)
     } finally {
       setIsLoading(false)
     }
@@ -60,12 +68,12 @@ export default function LoginPage() {
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="userId">Username</Label>
               <Input
-                id="username"
+                id="userId"
                 placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
                 required
               />
             </div>
@@ -100,8 +108,8 @@ export default function LoginPage() {
               <div className="text-xs text-gray-600">
                 <p className="font-medium mb-1">Secure Access</p>
                 <p>
-                  This is a protected platform for authorized users only. All activities are monitored and logged for
-                  security purposes.
+                  This is a protected platform for authorized users only. Please contact your administrator if you need
+                  access credentials.
                 </p>
               </div>
             </div>
