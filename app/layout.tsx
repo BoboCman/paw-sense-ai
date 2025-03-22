@@ -1,3 +1,6 @@
+// app/layout.tsx
+"use client"
+
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
@@ -6,6 +9,9 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
 import AuthGuard from "@/components/auth-guard"
+
+// Remove this line since you're not using an AuthProvider
+// import { AuthProvider } from "@/contexts/auth-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,18 +29,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          <AuthProvider>
-            <AuthGuard>
-              <div className="flex flex-col min-h-screen">
-                <Navbar />
-                <main className="flex-grow">{children}</main>
-                <Footer />
-              </div>
-            </AuthGuard>
-          </AuthProvider>
+          {/* Remove the AuthProvider wrapper */}
+          <AuthGuard>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+          </AuthGuard>
         </ThemeProvider>
       </body>
     </html>
   )
 }
-
