@@ -4,19 +4,18 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "../hooks/use-auth"
+import { getCurrentUser } from "@/app/utils/auth-utils"
 
 export default function CookiePolicyPage() {
   const [mounted, setMounted] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
-  const auth = useAuth()
-
+  
   useEffect(() => {
     setMounted(true)
-    if (auth && auth.user) {
-      setCurrentUser(auth.user)
-    }
-  }, [auth])
+    // Just get the user directly without using the useAuth hook
+    const user = getCurrentUser()
+    setCurrentUser(user)
+  }, [])
 
   if (!mounted) {
     return (
@@ -196,4 +195,3 @@ export default function CookiePolicyPage() {
     </div>
   )
 }
-
