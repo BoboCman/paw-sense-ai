@@ -1,8 +1,7 @@
 "use client"
 
-import { useAuth } from "@/app/contexts/auth-context"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,12 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { LogOut, User } from "lucide-react"
+import { LogOut, Shield } from "lucide-react"
+import { useAuth } from "../hooks/use-auth"
 
 export default function UserMenu() {
-  const { user, logout } = useAuth()
-  
-  if (!user) {
+  const { user, logout, isAuthenticated } = useAuth()
+
+  // If not authenticated, show login button
+  if (!isAuthenticated) {
     return (
       <Link href="/login">
         <Button variant="outline" size="sm">
@@ -26,7 +27,7 @@ export default function UserMenu() {
       </Link>
     )
   }
-  
+
   // Get initials for avatar
   const getInitials = (name: string) => {
     return name
@@ -36,32 +37,30 @@ export default function UserMenu() {
       .toUpperCase()
       .substring(0, 2)
   }
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
+            <AvatarFallback>{user ? getInitials(user.fullName) : "U"}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.fullName}</p>
-            <p className="text-xs leading-none text-muted-foreground">{user.role}</p>
+            <p className="font-medium">{user?.fullName}</p>
+            <p className="text-xs text-muted-foreground">{user?.userId}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/profile" className="flex w-full items-center">
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </Link>
+        <DropdownMenuItem className="text-xs text-muted-foreground cursor-default">
+          <Shield className="mr-2 h-4 w-4" />
+          <span>Role: {user?.role}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
+        <DropdownMenuItem className="text-red-600 cursor-pointer" onClick={logout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
@@ -69,3 +68,4 @@ export default function UserMenu() {
     </DropdownMenu>
   )
 }
+
