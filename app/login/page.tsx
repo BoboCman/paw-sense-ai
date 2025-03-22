@@ -1,33 +1,32 @@
 "use client"
-import { useState, useEffect } from "react"  // Added useEffect import
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"  // Added Link import
+import Link from "next/link"
 import { authenticateUser, getCurrentUser } from "@/app/utils/auth-utils"
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
   const router = useRouter()
-  
-  // This check needs to be in a useEffect to avoid hydration issues
-  useEffect(() => {
-    const user = getCurrentUser()
-    if (user) {
-      router.push("/")
-    }
-  }, [router])
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (isLoggingIn) return; // Prevent multiple submissions
+    
+    setIsLoggingIn(true)
     setError("")
     
     const user = authenticateUser(userId, password)
     if (user) {
-      // Successful login
-      router.push("/")
+      // Wait a moment before redirecting to avoid rapid navigation
+      setTimeout(() => {
+        router.push("/")
+      }, 500)
     } else {
       setError("Invalid credentials")
+      setIsLoggingIn(false)
     }
   }
   
@@ -55,6 +54,7 @@ export default function LoginPage() {
               className="w-full p-2 border rounded"
               required
               autoComplete="username"
+              disabled={isLoggingIn}
             />
           </div>
           
@@ -70,14 +70,16 @@ export default function LoginPage() {
               className="w-full p-2 border rounded"
               required
               autoComplete="current-password"
+              disabled={isLoggingIn}
             />
           </div>
           
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+            className={`w-full ${isLoggingIn ? 'bg-blue-400' : 'bg-blue-500 hover:bg-blue-600'} text-white py-2 rounded`}
+            disabled={isLoggingIn}
           >
-            Log In
+            {isLoggingIn ? 'Logging in...' : 'Log In'}
           </button>
         </form>
         
