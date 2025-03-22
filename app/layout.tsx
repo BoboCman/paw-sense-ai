@@ -5,7 +5,7 @@ import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
-import AuthGuard from "@/app/components/auth-guard"
+import AuthGuard from "@/components/auth-guard"
 
 const inter = Inter({ subsets: ["latin"] })
 
