@@ -1,12 +1,47 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "../contexts/auth-context"
+import { useAuth } from "../app/hooks/use-auth"
 
 export default function CookiePolicyPage() {
-  const { user } = useAuth()
+  const [mounted, setMounted] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  const auth = useAuth()
+
+  useEffect(() => {
+    setMounted(true)
+    if (auth && auth.user) {
+      setCurrentUser(auth.user)
+    }
+  }, [auth])
+
+  if (!mounted) {
+    return (
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="space-y-8">
+          {/* Static content only */}
+          <div className="flex justify-between items-center">
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
+
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">Cookie Policy</h1>
+            <p className="text-gray-500">Effective: March 21, 2025</p>
+          </div>
+
+          {/* Basic content without user-dependent parts */}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
@@ -20,7 +55,7 @@ export default function CookiePolicyPage() {
             </Button>
           </Link>
 
-          {!user && (
+          {!currentUser && (
             <Link href="/login">
               <Button variant="outline" size="sm">
                 Log In
