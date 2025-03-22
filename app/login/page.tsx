@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { authenticateUser, getCurrentUser } from "@/app/utils/auth-utils"
@@ -9,23 +9,47 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const [loginSuccess, setLoginSuccess] = useState(false)
   const router = useRouter()
+  
+  // Check if already logged in
+  useEffect(() => {
+    const user = getCurrentUser()
+    if (user) {
+      router.push("/")
+    }
+  }, [router])
+  
+  // Handle redirect after successful login
+  useEffect(() => {
+    if (loginSuccess) {
+      console.log("Login successful, redirecting to home...")
+      router.push("/")
+    }
+  }, [loginSuccess, router])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (isLoggingIn) return; // Prevent multiple submissions
+    if (isLoggingIn) return
     
     setIsLoggingIn(true)
     setError("")
     
-    const user = authenticateUser(userId, password)
-    if (user) {
-      // Wait a moment before redirecting to avoid rapid navigation
-      setTimeout(() => {
-        router.push("/")
-      }, 500)
-    } else {
-      setError("Invalid credentials")
+    try {
+      console.log("Attempting login with:", userId)
+      const user = authenticateUser(userId, password)
+      
+      if (user) {
+        console.log("Authentication successful:", user)
+        setLoginSuccess(true)
+      } else {
+        console.log("Authentication failed")
+        setError("Invalid credentials")
+        setIsLoggingIn(false)
+      }
+    } catch (error) {
+      console.error("Login error:", error)
+      setError("An error occurred during login")
       setIsLoggingIn(false)
     }
   }
@@ -41,47 +65,53 @@ export default function LoginPage() {
           </div>
         )}
         
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="userId">
-              Username
-            </label>
-            <input
-              id="userId"
-              type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              className="w-full p-2 border rounded"
-              required
-              autoComplete="username"
-              disabled={isLoggingIn}
-            />
+        {loginSuccess ? (
+          <div className="bg-green-100 text-green-700 p-3 rounded mb-4">
+            Login successful! Redirecting...
           </div>
-          
-          <div className="mb-6">
-            <label className="block text-gray-700 mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded"
-              required
-              autoComplete="current-password"
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="userId">
+                Username
+              </label>
+              <input
+                id="userId"
+                type="text"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                className="w-full p-2 border rounded"
+                required
+                autoComplete="username"
+                disabled={isLoggingIn}
+              />
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-gray-700 mb-2" htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-2 border rounded"
+                required
+                autoComplete="current-password"
+                disabled={isLoggingIn}
+              />
+            </div>
+            
+            <button
+              type="submit"
+              className={`w-full ${isLoggingIn ? 'bg-blue-400' : 'bg-blue-500 hover:bg-blue-600'} text-white py-2 rounded`}
               disabled={isLoggingIn}
-            />
-          </div>
-          
-          <button
-            type="submit"
-            className={`w-full ${isLoggingIn ? 'bg-blue-400' : 'bg-blue-500 hover:bg-blue-600'} text-white py-2 rounded`}
-            disabled={isLoggingIn}
-          >
-            {isLoggingIn ? 'Logging in...' : 'Log In'}
-          </button>
-        </form>
+            >
+              {isLoggingIn ? 'Logging in...' : 'Log In'}
+            </button>
+          </form>
+        )}
         
         <div className="mt-4 text-center text-sm text-gray-500">
           By logging in, you agree to our{" "}
