@@ -37,12 +37,14 @@ export default function AboutPage() {
               instincts.
             </p>
           </div>
-          <div className="relative h-64 md:h-auto rounded-xl overflow-hidden">
+          <div className="relative h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
             <Image
-              src="/placeholder.svg?height=400&width=600"
-              alt="Happy dog with owner"
-              fill
-              className="object-cover"
+              src="https://phw1ruho25yy63z9.public.blob.vercel-storage.com/dog-couple-imJZk8WzhtMSF6aGgN4lbUOQasIl47.png"
+              alt="Owner with dogs illustration"
+              width={600}
+              height={400}
+              className="object-cover w-full h-full"
+              unoptimized={true}
             />
           </div>
         </div>
