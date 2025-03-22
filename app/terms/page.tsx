@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "../contexts/auth-context"
 
 export default function TermsPage() {
   const { user } = useAuth()
