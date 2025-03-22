@@ -1,12 +1,46 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "../hooks/use-auth"
+import { getCurrentUser } from "@/app/utils/auth-utils"
 
 export default function TermsPage() {
-  const { user } = useAuth()
+  const [mounted, setMounted] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  
+  useEffect(() => {
+    setMounted(true)
+    // Just get the user directly without using the useAuth hook
+    const user = getCurrentUser()
+    setCurrentUser(user)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="space-y-8">
+          {/* Static content only */}
+          <div className="flex justify-between items-center">
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
+
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">Terms of Service</h1>
+            <p className="text-gray-500">Effective: March 21, 2025</p>
+          </div>
+
+          {/* Basic content without user-dependent parts */}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
@@ -20,7 +54,7 @@ export default function TermsPage() {
             </Button>
           </Link>
 
-          {!user && (
+          {!currentUser && (
             <Link href="/login">
               <Button variant="outline" size="sm">
                 Log In
@@ -507,17 +541,17 @@ export default function TermsPage() {
         </section>
 
         <section id="indemnification">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">14. INDEMNIFICATION</h2>
-          <p className="mb-4">
-            You agree to defend, indemnify, and hold harmless Financial Planner AI, its affiliates, licensors, and
-            service providers, and its and their respective officers, directors, employees, contractors, agents,
-            licensors, suppliers, successors, and assigns from and against any claims, liabilities, damages, judgments,
-            awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating
-            to your violation of these Terms or your use of the Services, including, but not limited to, your User
-            Contributions, any use of the Services' content, services, and products other than as expressly authorized
-            in these Terms, or your use of any information obtained from the Services.
-          </p>
-        </section>
+  <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">14. INDEMNIFICATION</h2>
+  <p className="mb-4">
+    You agree to defend, indemnify, and hold harmless Financial Planner AI, its affiliates, licensors, and
+    service providers, and its and their respective officers, directors, employees, contractors, agents,
+    licensors, suppliers, successors, and assigns from and against any claims, liabilities, damages, judgments,
+    awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating
+    to your violation of these Terms or your use of the Services, including, but not limited to, your User
+    Contributions, any use of the Services' content, services, and products other than as expressly authorized
+    in these Terms, or your use of any information obtained from the Services.
+  </p>
+</section>
 
         <section id="term-termination">
           <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">15. TERM AND TERMINATION</h2>
@@ -632,4 +666,3 @@ export default function TermsPage() {
     </div>
   )
 }
-
