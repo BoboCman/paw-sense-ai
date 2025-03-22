@@ -2,29 +2,35 @@
 
 import type React from "react"
 
-import { useEffect } from "react"
-import { useRouter, usePathname } from "next/navigation"
-import { useAuth } from "@/contexts/auth-context"
+import { useEffect, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { getCurrentUser, isPublicPath } from "../utils/auth-utils"
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { user, isLoading, isPublicPath } = useAuth()
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
-    // Skip auth check for public paths (login and legal pages)
+    // Skip auth check for public paths
     if (isPublicPath(pathname)) {
+      setLoading(false)
       return
     }
 
-    // If auth check is complete and user is not logged in, redirect to login
-    if (!isLoading && !user) {
-      router.push("/login")
-    }
-  }, [user, isLoading, router, pathname, isPublicPath])
+    // Check if user is authenticated
+    const user = getCurrentUser()
 
-  // Show nothing while loading or if no user and not on a public path
-  if (isLoading) {
+    if (!user) {
+      // Redirect to login if not authenticated
+      router.push("/login")
+    } else {
+      setLoading(false)
+    }
+  }, [pathname, router])
+
+  // Show loading state
+  if (loading && !isPublicPath(pathname)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#2980b9] border-t-transparent" />
@@ -32,11 +38,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!user && !isPublicPath(pathname)) {
-    return null
-  }
-
-  // If user is logged in or on a public path, show children
+  // Render children if authenticated or on public path
   return <>{children}</>
 }
 
