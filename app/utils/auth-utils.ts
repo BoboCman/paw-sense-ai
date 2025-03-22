@@ -1,4 +1,4 @@
-import { AUTHORIZED_USERS, type AuthUser } from "@/config/auth-config"
+import { AUTHORIZED_USERS, type AuthUser, PUBLIC_PATHS } from "@/app/config/auth-config"
 
 // Type for the authenticated user info stored in localStorage
 export type AuthenticatedUser = Omit<AuthUser, "password">
@@ -22,7 +22,9 @@ export function authenticateUser(userId: string, password: string): Authenticate
   }
 
   // Store in localStorage
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser))
+  if (typeof window !== "undefined") {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser))
+  }
 
   return authenticatedUser
 }
@@ -56,6 +58,6 @@ export function logoutUser(): void {
  * Check if a path is public (doesn't require authentication)
  */
 export function isPublicPath(path: string): boolean {
-  return ["/login", "/terms", "/privacy", "/cookie-policy"].includes(path)
+  return PUBLIC_PATHS.includes(path)
 }
 
