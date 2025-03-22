@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Brain, PawPrint, FileText, Zap, ArrowRight, Info } from "lucide-react"
+import { Brain, PawPrint, FileText, Zap, ArrowRight } from "lucide-react"
 
 export default function AboutPage() {
   return (
@@ -110,13 +110,6 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-
-            <div className="bg-white p-4 rounded-lg border border-gray-200 mt-4">
-              <p className="text-sm text-gray-600">
-                Don't worry about your videos – we analyze them securely and don't keep them stored. We only save the
-                insights to help you track progress!
-              </p>
-            </div>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
@@ -132,18 +125,10 @@ export default function AboutPage() {
               The analysis is based on recognized dog behavior concepts and training approaches that focus on balanced
               energy and clear communication.
             </p>
-            <p className="text-gray-700 mb-4">
+            <p className="text-gray-700">
               We continuously refine our analysis framework to provide practical, applicable insights that help
               strengthen the bond between dogs and their owners.
             </p>
-
-            <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100 flex items-start gap-3">
-              <Info className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-blue-700">
-                Just like humans, our AI sees best with clear videos! For the most accurate insights, try to capture
-                good lighting and clear views of your dog's behavior.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -200,4 +185,3 @@ export default function AboutPage() {
     </div>
   )
 }
-
