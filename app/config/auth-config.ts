@@ -15,6 +15,12 @@ export const AUTHORIZED_USERS: AuthUser[] = [
     role: "Dog Lover",
   },
   {
+    userId: "Trish",
+    password: "tc1",
+    fullName: "Shosha Booms",
+    role: "Pilot User",
+  },
+  {
     userId: "Natalie",
     password: "nac1",
     fullName: "Natalie Cee",
