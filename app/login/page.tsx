@@ -1,8 +1,7 @@
 "use client"
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import Link from "next/link"
-import { authenticateUser, getCurrentUser } from "@/app/utils/auth-utils"
+import { authenticateUser } from "@/app/utils/auth-utils"
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("")
@@ -10,23 +9,6 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [loginSuccess, setLoginSuccess] = useState(false)
-  const router = useRouter()
-  
-  // Check if already logged in
-  useEffect(() => {
-    const user = getCurrentUser()
-    if (user) {
-      router.push("/")
-    }
-  }, [router])
-  
-  // Handle redirect after successful login
-  useEffect(() => {
-    if (loginSuccess) {
-      console.log("Login successful, redirecting to home...")
-      router.push("/")
-    }
-  }, [loginSuccess, router])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -42,6 +24,12 @@ export default function LoginPage() {
       if (user) {
         console.log("Authentication successful:", user)
         setLoginSuccess(true)
+        
+        // Use window.location for a full page navigation instead of router
+        // This causes a complete page refresh which can help break any loops
+        setTimeout(() => {
+          window.location.href = "/"
+        }, 500)
       } else {
         console.log("Authentication failed")
         setError("Invalid credentials")
