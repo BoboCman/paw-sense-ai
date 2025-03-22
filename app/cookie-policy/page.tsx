@@ -9,7 +9,7 @@ import { getCurrentUser } from "@/app/utils/auth-utils"
 export default function CookiePolicyPage() {
   const [mounted, setMounted] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
-  
+
   useEffect(() => {
     setMounted(true)
     // Just get the user directly without using the useAuth hook
@@ -70,121 +70,162 @@ export default function CookiePolicyPage() {
 
         <section>
           <p className="mb-4">
-            By using our website https://www.pawsense-ai.com/, you consent to the use of cookies in accordance with this
-            Cookies Policy.
+            This Cookie Policy explains how Financial Planner AI, LLC doing business as PawSense AI ("PawSense AI,"
+            "us," "we," or "our") uses cookies and similar technologies on our website at https://www.pawsense-ai.com
+            ("Website").
           </p>
           <p className="mb-4">
-            You will have seen a pop-up to this effect on your first visit to this website. It may not appear on
-            subsequent visits, but you may withdraw your consent at any time by following the instructions below.
+            By using our Website, you consent to the use of cookies in accordance with this Cookie Policy. You can
+            withdraw your consent at any time by following the instructions below.
           </p>
         </section>
 
         <section id="what-are-cookies">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">What are Cookies?</h2>
-          <p>
-            A cookie is a text-only string of information that the Services transfer to the "cookie" file of the browser
-            you are using so that the Services can recognize your computer when you re-visit and remember certain
-            information about you, such as which pages you visit, choices you make from menus, and the time and date of
-            your visit.
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">WHAT ARE COOKIES?</h2>
+          <p className="mb-4">
+            Cookies are small text files that are stored on your device (computer, tablet, or mobile) when you visit
+            websites. They allow the website to recognize your device and remember certain information about your visit,
+            such as your preferences and actions on the site.
+          </p>
+          <p className="mb-4">
+            Cookies are widely used to make websites work more efficiently and provide valuable information to website
+            owners about how their sites are being used.
           </p>
         </section>
 
         <section id="types-of-cookies">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Types of Cookies</h2>
-          <p className="mb-4">Our website uses three types of cookies:</p>
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">TYPES OF COOKIES WE USE</h2>
+          <p className="mb-4">We use the following types of cookies on our Website:</p>
+
+          <h3 className="text-lg font-semibold mt-4 mb-2">Essential Cookies</h3>
           <p className="mb-4">
-            <span className="font-medium">(i) Session cookies:</span> these are temporary cookies that expire when you
-            close your browser. Session cookies allow the Services to recognize your computer as you navigate between
-            pages during a single browser session, allowing you to use the Services most efficiently.
+            These cookies are necessary for the Website to function properly. They enable core functionality such as
+            security, network management, and account access. You cannot opt out of these cookies.
           </p>
+
+          <h3 className="text-lg font-semibold mt-4 mb-2">Performance and Analytics Cookies</h3>
           <p className="mb-4">
-            <span className="font-medium">(ii) Persistent cookies:</span> these are stored on your computer between
-            browsing sessions until they expire or are deleted. They allow the Services to remember your preferences and
-            tailor services to you.
+            These cookies collect information about how visitors use our Website, such as which pages visitors go to
+            most often and if they receive error messages. This information helps us improve our Website and your
+            browsing experience. The information collected is aggregated and anonymous.
           </p>
-          <p>
-            <span className="font-medium">(iii) Web beacons:</span> Pages of our website and our emails may contain
-            small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel
-            gifs) that permit us, for example, to count users who have visited those pages and for other related website
-            statistics (for example, recording the popularity of certain website content and verifying system and server
-            integrity).
+
+          <h3 className="text-lg font-semibold mt-4 mb-2">Functionality Cookies</h3>
+          <p className="mb-4">
+            These cookies allow the Website to remember choices you make (such as your username, language, or region)
+            and provide enhanced, personalized features. They may also be used to provide services you have requested,
+            like watching a video.
+          </p>
+
+          <h3 className="text-lg font-semibold mt-4 mb-2">Targeting and Advertising Cookies</h3>
+          <p className="mb-4">
+            These cookies are used to deliver advertisements that are more relevant to you and your interests. They are
+            also used to limit the number of times you see an advertisement and to help measure the effectiveness of
+            advertising campaigns.
           </p>
         </section>
 
-        <section id="analytics">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">
-            Information Collected by our Analytics Software
-          </h2>
-          <p className="mb-4">
-            Some of the cookies we use are 'analytical' cookies. Our analytics software (Google Analytics, Facebook
-            Pixel and LinkedIn) allows us to recognize and count the number of visitors and to see how visitors move
-            around the Services when they are using the Services. This helps us to improve the way the Services work,
-            e.g., by making sure that users are finding what they need easily.
-          </p>
-          <p className="mb-4">The following types of information are collected by our analytics software:</p>
-          <ul className="list-disc pl-6 space-y-2">
+        <section id="third-party-cookies">
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">THIRD-PARTY COOKIES</h2>
+          <p className="mb-4">Our Website may include cookies from third-party services such as:</p>
+          <ul className="list-disc pl-6 space-y-2 mb-4">
             <li>
-              User's demographic information, e.g., language preference and location (city, country/territory,
-              continent, sub-continental region).
+              <span className="font-medium">Analytics Services</span>: We use analytics services to understand how
+              visitors interact with our Website. These services collect information such as how often users visit the
+              site, what pages they visit, and what other sites they used prior to coming to our site.
             </li>
             <li>
-              User's behavior, e.g., whether the user is a new or returning visitor, the frequency of visits/date of
-              last visit.
-            </li>
-            <li>User's technology, e.g., operating system, network/service provider (ISP and network host).</li>
-            <li>
-              Mobile information, e.g. whether the user accessed the Services via a mobile device and, if so, the type
-              of device (brand, service provider, operating system and input selection method).
+              <span className="font-medium">Social Media Platforms</span>: If you use social media features on our
+              Website, these services may collect information about your use of our Website.
             </li>
             <li>
-              Traffic source, e.g., direct (i.e., the user typed in the URL themselves) or referral (i.e., the user
-              clicked on a link) and for referral traffic, the traffic source (search engine or link); also the Google
-              search term (if applicable) that resulted in the link to the Website.
-            </li>
-            <li>
-              Content viewed, e.g., pages, files, and directories clicked on, landing pages/exit pages and search words
-              (if any) used on the Website.
+              <span className="font-medium">Payment Processors</span>: Our payment processors may use cookies when you
+              make payments on our Website.
             </li>
           </ul>
         </section>
 
-        <section id="changing-settings">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Changing your cookie settings</h2>
+        <section id="cookie-management">
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">COOKIE MANAGEMENT</h2>
           <p className="mb-4">
-            Please note that internet browsers allow you to change your cookie settings. These settings are usually
-            found in the 'options' or 'preferences' menu of your internet browser. In order to understand these
-            settings, the following links may be helpful. Otherwise you should use the 'Help' option in your internet
-            browser for more details.
+            Most web browsers allow you to manage your cookie preferences. You can set your browser to refuse cookies or
+            delete certain cookies. Generally, you can also set your browser to notify you when you receive a cookie,
+            giving you the chance to decide whether to accept it.
           </p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Cookie settings in Internet Explorer</li>
-            <li>Cookie settings in Firefox</li>
-            <li>Cookie settings in Chrome</li>
-            <li>Cookie settings in Safari</li>
+          <p className="mb-4">You can manage your cookies in your browser settings:</p>
+          <ul className="list-disc pl-6 space-y-2 mb-4">
+            <li>
+              <a
+                href="https://support.google.com/chrome/answer/95647"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2980b9] hover:underline"
+              >
+                Cookie settings in Chrome
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2980b9] hover:underline"
+              >
+                Cookie settings in Firefox
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2980b9] hover:underline"
+              >
+                Cookie settings in Safari
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2980b9] hover:underline"
+              >
+                Cookie settings in Edge
+              </a>
+            </li>
           </ul>
+          <p className="mb-4">
+            Please note that if you choose to block certain cookies, you may not be able to use all the features of our
+            Website.
+          </p>
         </section>
 
-        <section id="disabling">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Disabling cookies</h2>
+        <section id="do-not-track">
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">DO NOT TRACK SIGNALS</h2>
           <p className="mb-4">
-            If you do not want information collected through the use of cookies, please disable them by following the
-            instructions for your browser. Information about the procedure you are required to follow in order to
-            disable cookies can be found on https://www.allaboutcookies.org/manage-cookies/index.html.
+            Some browsers have a "Do Not Track" feature that signals to websites that you visit that you do not want to
+            have your online activity tracked. Our Website does not currently respond to "Do Not Track" signals.
           </p>
+        </section>
+
+        <section id="changes">
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">CHANGES TO THIS COOKIE POLICY</h2>
           <p className="mb-4">
-            After your initial visit to this website we may change the cookies we use. This cookies policy will always
-            allow you to know who is placing cookies, for what purpose and give you the means to disable them so you
-            should check it from time to time.
+            We may update this Cookie Policy from time to time to reflect changes in technology, regulation, or our
+            business practices. Any changes will become effective when we post the revised Cookie Policy on our Website.
+            We encourage you to periodically review this page for the latest information on our cookie practices.
           </p>
-          <p>Please be aware that if cookies are disabled not all features of the Services may operate as intended.</p>
         </section>
 
         <section id="contact">
-          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">Contact for More Information</h2>
-          <p>
-            If you have any questions about Financial Planner AI, LLC's cookies policies and practices, please send an
-            email to: rpc@financialplanner-ai.com.
+          <h2 className="text-xl font-bold mb-4 text-[#2980b9] border-b pb-2">CONTACT US</h2>
+          <p className="mb-4">
+            If you have any questions about our use of cookies or this Cookie Policy, please contact us at:
           </p>
+          <p className="mb-4">Financial Planner AI, LLC dba PawSense AI</p>
+          <p className="mb-4">Freehold, NJ 07728</p>
+          <p className="mb-4">Email: rpc@financialplanner-ai.com</p>
         </section>
 
         <div className="text-center text-sm text-gray-500 mt-12 pt-8 border-t">
@@ -195,3 +236,4 @@ export default function CookiePolicyPage() {
     </div>
   )
 }
+
