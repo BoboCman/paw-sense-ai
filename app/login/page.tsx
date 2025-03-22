@@ -1,7 +1,16 @@
 "use client"
+
+import type React from "react"
+
 import { useState } from "react"
 import Link from "next/link"
 import { authenticateUser } from "@/app/utils/auth-utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { PawPrint, Shield } from "lucide-react"
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("")
@@ -10,104 +19,119 @@ export default function LoginPage() {
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [loginSuccess, setLoginSuccess] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (isLoggingIn) return
-    
+
     setIsLoggingIn(true)
     setError("")
-    
-    try {
-      console.log("Attempting login with:", userId)
-      const user = authenticateUser(userId, password)
-      
-      if (user) {
-        console.log("Authentication successful:", user)
-        setLoginSuccess(true)
-        
-        // Use window.location for a full page navigation instead of router
-        // This causes a complete page refresh which can help break any loops
-        setTimeout(() => {
-          window.location.href = "/"
-        }, 500)
-      } else {
-        console.log("Authentication failed")
-        setError("Invalid credentials")
-        setIsLoggingIn(false)
-      }
-    } catch (error) {
-      console.error("Login error:", error)
-      setError("An error occurred during login")
+
+    const user = authenticateUser(userId, password)
+    if (user) {
+      setLoginSuccess(true)
+
+      // Use direct browser navigation instead of Next.js router
+      setTimeout(() => {
+        window.location.href = "/"
+      }, 500)
+    } else {
+      setError("Invalid username or password. Please try again.")
       setIsLoggingIn(false)
     }
   }
-  
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        
-        {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
-            {error}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#2980b9] to-[#3498db] p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <div className="flex justify-center mb-4">
+            <div className="bg-[#2980b9] p-3 rounded-full">
+              <PawPrint className="h-8 w-8 text-white" />
+            </div>
           </div>
-        )}
-        
-        {loginSuccess ? (
-          <div className="bg-green-100 text-green-700 p-3 rounded mb-4">
-            Login successful! Redirecting...
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="userId">
-                Username
-              </label>
-              <input
+          <CardTitle className="text-2xl text-center">PawSense AI</CardTitle>
+          <CardDescription className="text-center">Enter your credentials to access the platform</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {error && (
+            <Alert variant="destructive">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          {loginSuccess && (
+            <Alert className="bg-green-50 border-green-200">
+              <AlertDescription className="text-green-800">Login successful! Redirecting...</AlertDescription>
+            </Alert>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="userId">Username</Label>
+              <Input
                 id="userId"
-                type="text"
+                placeholder="Enter your username"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
-                className="w-full p-2 border rounded"
                 required
-                autoComplete="username"
-                disabled={isLoggingIn}
+                disabled={isLoggingIn || loginSuccess}
               />
             </div>
-            
-            <div className="mb-6">
-              <label className="block text-gray-700 mb-2" htmlFor="password">
-                Password
-              </label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
                 id="password"
                 type="password"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 border rounded"
                 required
-                autoComplete="current-password"
-                disabled={isLoggingIn}
+                disabled={isLoggingIn || loginSuccess}
               />
             </div>
-            
-            <button
-              type="submit"
-              className={`w-full ${isLoggingIn ? 'bg-blue-400' : 'bg-blue-500 hover:bg-blue-600'} text-white py-2 rounded`}
-              disabled={isLoggingIn}
-            >
-              {isLoggingIn ? 'Logging in...' : 'Log In'}
-            </button>
+            <Button type="submit" className="w-full bg-[#27ae60]" disabled={isLoggingIn || loginSuccess}>
+              {isLoggingIn ? (
+                <span className="flex items-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+                  Logging in...
+                </span>
+              ) : (
+                "Log in"
+              )}
+            </Button>
           </form>
-        )}
-        
-        <div className="mt-4 text-center text-sm text-gray-500">
-          By logging in, you agree to our{" "}
-          <Link href="/terms" className="text-blue-500 hover:underline">Terms of Service</Link>,{" "}
-          <Link href="/privacy" className="text-blue-500 hover:underline">Privacy Policy</Link>, and{" "}
-          <Link href="/cookie-policy" className="text-blue-500 hover:underline">Cookie Policy</Link>.
-        </div>
-      </div>
+        </CardContent>
+        <CardFooter className="flex flex-col">
+          {/* Security Notice */}
+          <div className="w-full mt-4 p-3 bg-gray-50 rounded-md border border-gray-200">
+            <div className="flex items-start gap-2">
+              <Shield className="h-4 w-4 text-gray-500 mt-0.5 flex-shrink-0" />
+              <div className="text-xs text-gray-600">
+                <p className="font-medium mb-1">Secure Access</p>
+                <p>
+                  This is a protected platform for authorized users only. Please contact your administrator if you need
+                  access credentials.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Legal Links */}
+          <div className="w-full mt-4 text-center text-xs text-gray-500">
+            <p className="mb-2">By logging in, you agree to our:</p>
+            <div className="flex justify-center space-x-4">
+              <Link href="/terms" className="text-[#2980b9] hover:underline">
+                Terms of Service
+              </Link>
+              <Link href="/privacy" className="text-[#2980b9] hover:underline">
+                Privacy Policy
+              </Link>
+              <Link href="/cookie-policy" className="text-[#2980b9] hover:underline">
+                Cookie Policy
+              </Link>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   )
 }
+
