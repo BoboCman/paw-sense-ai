@@ -22,28 +22,27 @@ export default function AboutPage() {
           <div>
             <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
             <p className="text-gray-700 mb-4">
-              PawSense AI believes that understanding your dog's emotional state and behavioral needs is the foundation of
-              a strong human-canine relationship. Our mission is to make professional-level dog behavior analysis accessible to
-              all dog owners, helping you establish clear communication and consistent boundaries.
+              At PawSense AI, we believe that understanding your dog's energy and natural instincts is the foundation of
+              a strong human-canine bond. Our mission is to make professional-level dog behavior analysis accessible to
+              all dog owners, helping you establish calm leadership and clear boundaries.
             </p>
             <p className="text-gray-700 mb-4">
-              By leveraging artificial intelligence, we provide insights that help you interpret your dog's emotional states,
-              body language, and social communication signals - leading to more effective training and a harmonious relationship based
-              on mutual understanding and positive engagement.
+              By leveraging artificial intelligence, we provide insights that help you read your dog's energy state,
+              body language, and pack instincts - leading to more balanced training and a harmonious relationship based
+              on mutual respect and clear communication.
             </p>
             <p className="text-gray-700">
-              We're committed to promoting evidence-based training methods that address your dog's fundamental needs for physical exercise,
-              mental enrichment, and social connection while respecting their individual temperament, learning history, and unique personality.
+              We're committed to promoting balanced training methods that address your dog's primal needs for exercise,
+              discipline, and affection—in that exact order—while respecting their unique personality and natural
+              instincts.
             </p>
           </div>
-          <div className="relative h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
+          <div className="relative h-64 md:h-auto rounded-xl overflow-hidden">
             <Image
-              src="https://phw1ruho25yy63z9.public.blob.vercel-storage.com/dog-couple-imJZk8WzhtMSF6aGgN4lbUOQasIl47.png"
-              alt="Owner with dogs illustration"
-              width={600}
-              height={400}
-              className="object-cover w-full h-full"
-              unoptimized={true}
+              src="/placeholder.svg?height=400&width=600"
+              alt="Happy dog with owner"
+              fill
+              className="object-cover"
             />
           </div>
         </div>
@@ -62,9 +61,9 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Video Capture</h3>
                 <p className="text-gray-700">
-                  You record and upload a video showing your dog's energy state and behavior patterns. Our system
-                  analyzes everything from ear position to tail carriage, accepting videos up to 100MB in common
-                  formats.
+                  You record and upload a video showing your dog's natural behaviors - whether relaxing, playing, or
+                  interacting with you. Our system captures subtle details from ear positions and facial expressions to
+                  posture changes, accepting videos up to 100MB in common formats.
                 </p>
               </div>
             </div>
@@ -76,8 +75,9 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">AI Processing</h3>
                 <p className="text-gray-700">
-                  Our specialized AI analyzes your dog's energy states, body language, posture changes, and subtle
-                  communication signals frame by frame, identifying patterns that reveal their mental state.
+                  Our specialized AI analyzes energy states, relationship dynamics, and key behavioral indicators. It
+                  detects subtle signals like ear positions and body language to create a complete profile of your dog's
+                  emotional state.
                 </p>
               </div>
             </div>
@@ -89,8 +89,9 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Report Generation</h3>
                 <p className="text-gray-700">
-                  The AI generates a comprehensive analysis with energy state assessment, relationship dynamics, key
-                  behavioral indicators, and structured training exercises you can implement immediately.
+                  The AI generates a structured report covering energy patterns, relationship dynamics, and behavioral
+                  indicators. Each report includes training exercises with implementation steps, timeframes, and success
+                  indicators.
                 </p>
               </div>
             </div>
@@ -102,8 +103,8 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-2">Implementation</h3>
                 <p className="text-gray-700">
-                  You receive authoritative, practical exercises that address your dog's specific needs, helping you
-                  establish clear boundaries and project the calm-assertive energy your dog responds to.
+                  You receive step-by-step training exercises with clear success metrics and common challenges to avoid.
+                  Each report includes progress indicators, 'if/then' scenarios, and potential warning signs to monitor.
                 </p>
               </div>
             </div>
@@ -112,16 +113,19 @@ export default function AboutPage() {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4">Our Technology</h3>
             <p className="text-gray-700 mb-4">
-              PawSense AI uses a combination of computer vision and machine learning models designed to recognize and interpret canine body language and behavior patterns.
+              PawSense AI analyzes dog behavior using established principles of canine communication and body language.
             </p>
             <p className="text-gray-700 mb-4">
-              Our system can identify key behavioral signals including posture changes, ear positioning, tail movement, and other important communication cues that dogs use to express their emotional and mental states.
+              Our system examines multiple aspects of behavior including posture, ear positions, engagement cues, and
+              interaction patterns to create a comprehensive assessment.
             </p>
             <p className="text-gray-700 mb-4">
-             The system is built on established principles of canine behavior science, drawing from publicly available research and knowledge bases about dog behavior and training methodologies.
+              The analysis is based on recognized dog behavior concepts and training approaches that focus on balanced
+              energy and clear communication.
             </p>
             <p className="text-gray-700">
-              We regularly update our approach based on ongoing research in dog cognition and behavior to provide you with the most relevant and effective insights.
+              We continuously refine our analysis framework to provide practical, applicable insights that help
+              strengthen the bond between dogs and their owners.
             </p>
           </div>
         </div>
@@ -179,3 +183,4 @@ export default function AboutPage() {
     </div>
   )
 }
+
