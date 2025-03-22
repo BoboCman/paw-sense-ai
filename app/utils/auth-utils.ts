@@ -11,21 +11,20 @@ const AUTH_STORAGE_KEY = "pawsense_auth_user"
  */
 export function authenticateUser(userId: string, password: string): AuthenticatedUser | null {
   const user = AUTHORIZED_USERS.find((u) => u.userId === userId && u.password === password)
-
   if (!user) return null
-
+  
   // Create a user object without the password
   const authenticatedUser: AuthenticatedUser = {
     userId: user.userId,
     fullName: user.fullName,
     role: user.role,
   }
-
+  
   // Store in localStorage
   if (typeof window !== "undefined") {
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authenticatedUser))
   }
-
+  
   return authenticatedUser
 }
 
@@ -34,10 +33,10 @@ export function authenticateUser(userId: string, password: string): Authenticate
  */
 export function getCurrentUser(): AuthenticatedUser | null {
   if (typeof window === "undefined") return null
-
+  
   const storedUser = localStorage.getItem(AUTH_STORAGE_KEY)
   if (!storedUser) return null
-
+  
   try {
     return JSON.parse(storedUser) as AuthenticatedUser
   } catch (error) {
@@ -51,7 +50,12 @@ export function getCurrentUser(): AuthenticatedUser | null {
  */
 export function logoutUser(): void {
   if (typeof window === "undefined") return
+  
+  // Clear user from localStorage
   localStorage.removeItem(AUTH_STORAGE_KEY)
+  
+  // Force a full page reload and redirect to login
+  window.location.href = "/login"
 }
 
 /**
@@ -60,4 +64,3 @@ export function logoutUser(): void {
 export function isPublicPath(path: string): boolean {
   return PUBLIC_PATHS.includes(path)
 }
-
