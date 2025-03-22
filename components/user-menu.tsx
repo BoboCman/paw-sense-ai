@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { LogOut, Shield } from "lucide-react"
-import { useAuth } from "../hooks/use-auth"
+import { useAuth } from "@/app/hooks/use-auth"
 
 export default function UserMenu() {
   const { user, logout, isAuthenticated } = useAuth()
