@@ -1,4 +1,4 @@
-import { AUTHORIZED_USERS, type AuthUser } from "../config/auth-config"
+import { AUTHORIZED_USERS, type AuthUser } from "@/config/auth-config"
 
 // Type for the authenticated user info stored in localStorage
 export type AuthenticatedUser = Omit<AuthUser, "password">
