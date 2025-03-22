@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
-import { useAuth } from "../utils/auth-utils"
+import { useAuth } from "../hooks/use-auth"
 
 export default function CookiePolicyPage() {
   const [mounted, setMounted] = useState(false)
