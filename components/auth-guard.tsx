@@ -1,12 +1,12 @@
 "use client"
 import type React from "react"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { getCurrentUser, isPublicPath } from "@/app/utils/auth-utils"
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
-  const redirectingRef = useRef(false)
+  const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   
@@ -17,27 +17,27 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       return
     }
     
-    // Skip if already redirecting
-    if (redirectingRef.current) return
+    // Skip if we've already redirected
+    if (hasRedirected) return
     
     // Check if user is authenticated
     const user = getCurrentUser()
     if (!user) {
-      // Prevent multiple redirects
-      redirectingRef.current = true
+      // Set flag to prevent multiple redirects
+      setHasRedirected(true)
       
       // Redirect to login if not authenticated
       console.log("AuthGuard redirecting to login")
       router.push("/login")
-      
-      // Reset redirect flag after delay
-      setTimeout(() => {
-        redirectingRef.current = false
-      }, 1000)
     } else {
       setLoading(false)
     }
-  }, [pathname, router])
+    
+    // Reset redirect flag when pathname changes
+    return () => {
+      setHasRedirected(false)
+    }
+  }, [pathname, router, hasRedirected])
   
   // Show loading state
   if (loading && !isPublicPath(pathname)) {
