@@ -12,6 +12,13 @@ export default function Footer() {
               <span className="font-bold text-lg">PawSense AI</span>
             </Link>
             <p className="mt-2 text-sm text-gray-600">Intelligent analysis for balanced dog training</p>
+            <p className="mt-1 text-xs text-gray-500 italic">
+              A helpful tool to complement professional dog training advice
+            </p>
+            <p className="mt-2 text-xs text-gray-500 flex items-center">
+              <span className="inline-block w-2 h-2 bg-[#27ae60] rounded-full mr-1"></span>
+              Video quality affects results. Happy training!
+            </p>
           </div>
 
           <div>
@@ -79,7 +86,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
-          <p>© {new Date().getFullYear()} PawSense AI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Financial Planner AI, LLC dba PawSense AI. All rights reserved.</p>
         </div>
       </div>
     </footer>
