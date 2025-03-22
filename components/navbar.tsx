@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { PawPrint, Menu, X } from "lucide-react"
 import { usePathname } from "next/navigation"
-import UserMenu from "@/components/user-menu"
+import UserMenu from "@/app/components/user-menu"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
