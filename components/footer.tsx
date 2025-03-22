@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { PawPrint } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -8,17 +7,24 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center space-x-2">
-              <PawPrint className="h-5 w-5 text-[#2980b9]" />
-              <span className="font-bold text-lg">PawSense AI</span>
+              <div className="text-[#2980b9]">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="6" fill="currentColor" opacity="0.7" />
+                  <circle cx="24" cy="12" r="4" fill="currentColor" opacity="0.9" />
+                  <circle cx="12" cy="24" r="4" fill="currentColor" opacity="0.9" />
+                  <circle cx="24" cy="24" r="6" fill="currentColor" opacity="0.7" />
+                </svg>
+              </div>
+              <span className="font-bold text-xl">PawSense AI</span>
             </Link>
-            <p className="mt-2 text-sm text-gray-600">Intelligent analysis for balanced dog training</p>
-            <p className="mt-1 text-xs text-gray-500 italic">
-              A helpful tool to complement professional dog training advice
-            </p>
-            <p className="mt-2 text-xs text-gray-500 flex items-center">
-              <span className="inline-block w-2 h-2 bg-[#27ae60] rounded-full mr-1"></span>
-              Video quality affects results. Happy training!
-            </p>
+            <div className="mt-3 space-y-2">
+              <p className="text-gray-700">Intelligent analysis for balanced dog training</p>
+              <p className="text-gray-500 italic">A helpful tool to complement professional dog training advice</p>
+              <p className="flex items-center text-gray-600">
+                <span className="inline-block w-2 h-2 bg-[#27ae60] rounded-full mr-2"></span>
+                Video quality affects results. Happy training!
+              </p>
+            </div>
           </div>
 
           <div>
