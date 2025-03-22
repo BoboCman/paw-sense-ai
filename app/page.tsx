@@ -33,7 +33,7 @@ export default function Home() {
             <div className="flex-1 mt-8 md:mt-0">
               <div className="relative w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl">
                 <Image
-                  src="https://phw1ruho25yy63z9.public.blob.vercel-storage.com/dog-owner-oDW5Gvp0aUVpMnzyOso2QasM3ducuA.avif"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-eBeP9EnLg2AT2n3Q5DywyYRtVVeYBI.png"
                   alt="Dog behavior illustration showing a dog on furniture"
                   width={600}
                   height={400}
@@ -65,7 +65,9 @@ export default function Home() {
                 <span className="text-white text-2xl font-bold">2</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">AI Analysis</h3>
-              <p className="text-gray-600">Our advanced AI analyzes the video for behavioral patterns and cues.</p>
+              <p className="text-gray-600">
+                Our AI analyzes energy states, relationship dynamics, and behavioral indicators.
+              </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -73,7 +75,9 @@ export default function Home() {
                 <span className="text-white text-2xl font-bold">3</span>
               </div>
               <h3 className="text-xl font-semibold mb-2">Receive Insights</h3>
-              <p className="text-gray-600">Get a detailed report with actionable training recommendations.</p>
+              <p className="text-gray-600">
+                Get a detailed report with structured training exercises and progress indicators.
+              </p>
             </div>
           </div>
         </div>
@@ -84,14 +88,14 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Comprehensive Behavior Analysis</h2>
           <p className="text-center text-gray-600 max-w-2xl mx-auto mb-8">
-            Each PawSense AI report delivers deep insights into your dog's natural behavior patterns through six
-            essential areas of analysis:
+            Each PawSense AI report analyzes your dog's specific behaviors and provides actionable training guidance
+            through six essential sections:
           </p>
 
           <div className="max-w-3xl mx-auto bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden">
             <div className="bg-[#2980b9] text-white p-4">
               <h3 className="text-xl font-semibold">Behavior Analysis Report</h3>
-              <p className="text-sm opacity-90">Sample: Golden Retriever, 2 years old, Play Behavior</p>
+              <p className="text-sm opacity-90">Sample: Personalized dog behavior analysis</p>
             </div>
 
             <div className="p-6">
@@ -100,8 +104,8 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">Overview</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      A clear assessment of your dog's overall behavioral state and social dynamics, establishing the
-                      foundation for understanding their needs.
+                      A concise summary of your dog's behavior in the specific setting shown, including posture,
+                      engagement level, and key environmental interactions.
                     </p>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
@@ -124,8 +128,8 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">Energy State Analysis</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      Detailed evaluation of your dog's energy levels, from active-excited to calm-surrender states,
-                      with specific indicators of their emotional balance.
+                      Analysis of your dog's energy patterns, transitions, and self-regulation abilities, with focus on
+                      physical indicators like ear position and body language.
                     </p>
                     <ul className="space-y-3">
                       <li className="pb-3 border-b border-gray-100">
@@ -156,8 +160,8 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">Relationship Dynamics</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      Analysis of how your dog relates to other animals, humans, and their environment, revealing their
-                      social communication style.
+                      Assessment of your dog's interactions with people and other animals, highlighting proximity
+                      behaviors, attentiveness, and comfort signals.
                     </p>
                     <ul className="space-y-3">
                       <li className="pb-3 border-b border-gray-100">
@@ -189,8 +193,8 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">Key Behavioral Indicators</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      Specific behaviors that reveal your dog's psychological state and needs, identifying patterns that
-                      may not be obvious to the untrained eye.
+                      Identification of subtle but important behaviors like blink rates and ear positions that reveal
+                      your dog's emotional state and comfort level.
                     </p>
                     <ul className="space-y-3">
                       <li className="pb-3 border-b border-gray-100">
@@ -219,8 +223,8 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">Training Approach Recommendations</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      Customized exercises designed specifically for your dog's needs, with practical implementation
-                      steps:
+                      Targeted training exercises with clear steps, timeframes, success indicators, and common pitfalls
+                      to avoid:
                     </p>
                     <ul className="space-y-3">
                       <li className="pb-3 border-b border-gray-100">
@@ -260,8 +264,8 @@ export default function Home() {
                   <AccordionTrigger className="text-lg font-medium">Key Training Principle</AccordionTrigger>
                   <AccordionContent>
                     <p className="mb-4">
-                      A fundamental insight about your dog's specific needs, delivered as a memorable principle you can
-                      apply consistently in your interactions.
+                      A memorable guiding principle derived from your dog's observed behavior that you can apply across
+                      all interactions.
                     </p>
                     <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
                       <p className="text-[#2980b9] font-medium">
@@ -324,7 +328,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to better understand your dog?</h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Upload a video today and receive detailed insights to your inbox within minutes.
+            Upload a video today and receive detailed insights within 15 minutes.
           </p>
           <Link href="/upload">
             <Button size="lg" variant="outline" className="bg-white text-[#27ae60] hover:bg-gray-100 border-white">
