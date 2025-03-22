@@ -9,8 +9,8 @@ export type AuthUser = {
 // Predefined list of authorized users
 export const AUTHORIZED_USERS: AuthUser[] = [
   {
-    userId: "trainer1",
-    password: "pawsense123",
+    userId: "Bob",
+    password: "123",
     fullName: "Alex Johnson",
     role: "Dog Trainer",
   },
