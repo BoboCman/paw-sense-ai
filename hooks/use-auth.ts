@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { authenticateUser, getCurrentUser, logoutUser, isPublicPath, type AuthenticatedUser } from "@/utils/auth-utils"
+import { authenticateUser, getCurrentUser, logoutUser, isPublicPath, type AuthenticatedUser } from "../utils/auth-utils"
 
 export function useAuth() {
   const [user, setUser] = useState<AuthenticatedUser | null>(null)
