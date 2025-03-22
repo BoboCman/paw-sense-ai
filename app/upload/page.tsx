@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CheckCircle, Info } from "lucide-react"
-import DirectVideoUploader from "@/components/direct-video-uploader" // Import the new component
+import DirectVideoUploader from "@/components/direct-video-uploader"
 
 export default function UploadPage() {
   const router = useRouter()
@@ -164,6 +164,13 @@ export default function UploadPage() {
                   <p>
                     For best results, ensure good lighting and capture your dog's full body language including ear
                     position, tail carriage, and posture changes. Maximum file size: 100MB.
+                  </p>
+                </div>
+
+                <div className="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                  <p className="text-sm text-blue-700">
+                    By sharing your video, you're helping PawSense get smarter! We'll analyze your pup's behavior and
+                    may learn from patterns to help all dog owners.
                   </p>
                 </div>
               </div>
