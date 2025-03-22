@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
-import { getCurrentUser, isPublicPath } from "@/utils/auth-utils"
+import { getCurrentUser, isPublicPath } from "@/app/utils/auth-utils"
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
