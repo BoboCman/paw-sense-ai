@@ -18,11 +18,10 @@ export default function Footer() {
               <span className="font-bold text-xl">PawSense AI</span>
             </Link>
             <div className="mt-3 space-y-2">
-              <p className="text-gray-700">Intelligent analysis for balanced dog training</p>
-              <p className="text-gray-500 italic">A helpful tool to complement professional dog training advice</p>
+              <p className="text-gray-600"></p>
+              <p className="text-gray-600 italic"></p>
               <p className="flex items-center text-gray-600">
-                <span className="inline-block w-2 h-2 bg-[#27ae60] rounded-full mr-2"></span>
-                Video quality affects results. Happy training!
+        
               </p>
             </div>
           </div>
