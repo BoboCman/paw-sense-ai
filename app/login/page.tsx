@@ -1,6 +1,7 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"  // Added useEffect import
 import { useRouter } from "next/navigation"
+import Link from "next/link"  // Added Link import
 import { authenticateUser, getCurrentUser } from "@/app/utils/auth-utils"
 
 export default function LoginPage() {
@@ -17,7 +18,7 @@ export default function LoginPage() {
     }
   }, [router])
   
-  const handleSubmit = async (e) => {  // Added event parameter
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
     
