@@ -18,7 +18,7 @@ export default function Footer() {
               <span className="font-bold text-xl">PawSense AI</span>
             </Link>
             <div className="mt-3 space-y-2">
-              <p className="text-gray-600"></p>
+              <p className="text-gray-600">Intelligent analysis for balanced dog training</p>
               <p className="text-gray-600 italic"></p>
               <p className="flex items-center text-gray-600">
         
